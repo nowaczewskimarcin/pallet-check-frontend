@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <nav>
-      
-      {{palletsJson.id}}
+
+      <div v-for="pallet in pallets" :key="pallet.id"> {{ pallet.id }} - {{ pallet.number }}</div>
+
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -16,17 +17,17 @@ export default {
   name: 'App',
   data() {
     return {
-      palletsJson: null,
+      pallets: null,
     }
   },
   methods: {
     fetchDailyPallets() {
       fetch('api/dailyPallets')
         .then((response) => response.json())
-        .then((json)=> this.palletsJson = json)
+        .then((json) => this.pallets = json)
     }
   },
-  mounted () {
+  mounted() {
     this.fetchDailyPallets();
   }
 }
