@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <nav>
-      {{ apiPath }}
+      
+      {{palletsJson.id}}
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
@@ -15,8 +16,18 @@ export default {
   name: 'App',
   data() {
     return {
-      apiPath: process.env.VUE_APP_API_PATH
+      palletsJson: null,
     }
+  },
+  methods: {
+    fetchDailyPallets() {
+      fetch('api/dailyPallets')
+        .then((response) => response.json())
+        .then((json)=> this.palletsJson = json)
+    }
+  },
+  mounted () {
+    this.fetchDailyPallets();
   }
 }
 </script>
