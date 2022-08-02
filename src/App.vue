@@ -19,30 +19,7 @@
     </v-app-bar>
 
     <v-main>
-      <div v-for="pallet in pallets" :key="pallet.id"> {{ pallet.id }} - {{ pallet.number }}</div>
       <router-view />
     </v-main>
   </v-app>
 </template>
-
-<script>
-
-export default {
-  name: 'App',
-  data() {
-    return {
-      pallets: null,
-    }
-  },
-  methods: {
-    fetchDailyPallets() {
-      fetch('api/dailyPallets')
-        .then((response) => response.json())
-        .then((json) => this.pallets = json)
-    }
-  },
-  mounted() {
-    this.fetchDailyPallets();
-  }
-}
-</script>
