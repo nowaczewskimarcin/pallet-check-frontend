@@ -27,8 +27,6 @@
             </v-btn>
         </v-card-actions>
 
-
-
         <v-snackbar color="red" :value="errorMessage != null" :multi-line="multiLine">
             {{ errorMessage }}
 
@@ -38,11 +36,9 @@
                 </v-btn>
             </template>
         </v-snackbar>
-
     </v-card>
 
 </template>
-
 <script>
 
 export default {
@@ -65,7 +61,6 @@ export default {
             console.log(this.pallets)
             alert('Wybrana paleta: ' + this.pallets[this.selectedItem].number);
         },
-
         async generateNewPallets() {
             const response = await fetch('api/dailyPallets', {
                 method: 'POST'
@@ -76,7 +71,6 @@ export default {
                 // alert(json.errorMessage)
             }
         },
-
     },
     mounted() {
         this.fetchDailyPallets();
