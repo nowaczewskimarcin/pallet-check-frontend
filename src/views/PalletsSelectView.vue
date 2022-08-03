@@ -3,13 +3,15 @@
         <v-card-title>Palety w kolejce</v-card-title>
 
         <v-list>
-            <v-list-item v-for="pallet in pallets" :key="pallet.id">
-                <v-list-item-content>
-                    <v-list-item-title>
-                        {{ pallet.number }}
-                    </v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+            <v-list-item-group v-model="selectedItem" color="primary" dense>
+                <v-list-item v-for="pallet in pallets" :key="pallet.id">
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            {{ pallet.number }}
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list-item-group>
         </v-list>
 
         <v-card-actions>
