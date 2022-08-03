@@ -2,7 +2,7 @@
     <v-card class="mx-auto" max-width="1000" tile>
         <v-card-title>Palety w kolejce</v-card-title>
 
-        <v-list>
+        <v-list rounded>
             <v-list-item-group v-model="selectedItem" color="primary" dense>
                 <v-list-item v-for="pallet in pallets" :key="pallet.id">
                     <v-list-item-content>
@@ -15,7 +15,7 @@
         </v-list>
 
         <v-card-actions>
-            <v-btn text>
+            <v-btn text depressed :disabled="selectedItem == null" @click="goToPalletCheck">
                 <v-icon left>
                     mdi-arrow-right-bold
                 </v-icon>Przejdź do kontroli palety
@@ -51,6 +51,8 @@ export default {
         return {
             pallets: null,
             errorMessage: null,
+            selectedItem: null,
+            btnDisable: true,
         }
     },
     methods: {
@@ -60,7 +62,10 @@ export default {
             this.pallets = json;
         },
         goToPalletCheck() {
+            console.log(this.pallets)
+            alert('Wybrana paleta: ' + this.pallets[this.selectedItem].number);
         },
+
         async generateNewPallets() {
             const response = await fetch('api/dailyPallets', {
                 method: 'POST'
