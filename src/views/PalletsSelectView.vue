@@ -48,7 +48,6 @@ export default {
             pallets: null,
             errorMessage: null,
             selectedItem: null,
-            btnDisable: true,
         }
     },
     methods: {
