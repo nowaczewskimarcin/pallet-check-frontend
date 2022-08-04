@@ -24,7 +24,7 @@
                     mdi-arrow-right-bold
                 </v-icon>Przejdź do kontroli palety
             </v-btn>
-            <v-btn text @click="generateNewPallets" :disabled="generateNewPalletsButtonDisabled">
+            <v-btn text @click="generateAndFetchPallets" :disabled="generateNewPalletsButtonDisabled">
                 <v-icon left>
                     mdi-playlist-plus
                 </v-icon>Wygeneruj nowe palety
@@ -66,7 +66,7 @@ export default {
             alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
         },
         async generateNewPallets() {
-            this.reserve();
+            this.loadingBar();
             this.disabled = true;
             try {
                 const response = await fetch('api/dailyPallets', {
@@ -75,7 +75,6 @@ export default {
                 if (response.status == 400) {
                     const json = await response.json();
                     this.errorMessage = json.errorMessage;
-                    // alert(json.errorMessage)
                 }
                 await this.fetchDailyPallets();
             } finally {
@@ -87,11 +86,14 @@ export default {
                 this.errorMessage = null;
             }
         },
-        reserve() {
+        loadingBar() {
             this.loading = true
-
             setTimeout(() => (this.loading = false), 2000)
         },
+        generateAndFetchPallets() {
+            await this.fetchDailyPallets();
+            await this.generateNewPallets();
+        }
     },
     mounted() {
         this.fetchDailyPallets();
