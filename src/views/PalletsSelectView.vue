@@ -90,7 +90,7 @@ export default {
             this.loading = true
             setTimeout(() => (this.loading = false), 2000)
         },
-        generateAndFetchPallets() {
+        async generateAndFetchPallets() {
             await this.fetchDailyPallets();
             await this.generateNewPallets();
         }
