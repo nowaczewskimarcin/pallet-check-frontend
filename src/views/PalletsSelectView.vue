@@ -1,5 +1,8 @@
 <template>
-    <v-card class="mx-auto" max-width="1000" tile>
+    <v-card class="mx-auto" max-width="1000" tile :loading="loading">
+        <template slot="progress">
+            <v-progress-linear color="deep-purple" height="20" indeterminate></v-progress-linear>
+        </template>
         <v-card-title>Palety w kolejce</v-card-title>
 
         <v-list class="scroll" max-height="50vh">
@@ -49,6 +52,7 @@ export default {
             errorMessage: null,
             selectedPallet: null,
             generateNewPalletsButtonDisabled: false,
+            loading: false,
         }
     },
     methods: {
@@ -62,6 +66,7 @@ export default {
             alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
         },
         async generateNewPallets() {
+            this.reserve();
             this.disabled = true;
             try {
                 const response = await fetch('api/dailyPallets', {
@@ -81,6 +86,11 @@ export default {
             if (onSnackbarValue == false) {
                 this.errorMessage = null;
             }
+        },
+        reserve() {
+            this.loading = true
+
+            setTimeout(() => (this.loading = false), 2000)
         },
     },
     mounted() {
