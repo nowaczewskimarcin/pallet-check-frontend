@@ -70,7 +70,6 @@ export default {
                 if (response.status == 400) {
                     const json = await response.json();
                     this.errorMessage = json.errorMessage;
-                    // alert(json.errorMessage)
                 }
                 await this.fetchDailyPallets();
             } finally {
