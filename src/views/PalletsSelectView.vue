@@ -28,15 +28,18 @@
             </v-btn>
         </v-card-actions>
 
-        <v-snackbar color="red" :value="errorMessage != null">
-            {{ errorMessage }}
+        <<<<<<< HEAD <v-snackbar color="red" :value="errorMessage != null">
+            =======
+            <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput" :multi-line="multiLine">
+                >>>>>>> 75da531af51acb6cbaf8ac690a6e8c879ed0ed2d
+                {{ errorMessage }}
 
-            <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="errorMessage = null">
-                    Zamknij
-                </v-btn>
-            </template>
-        </v-snackbar>
+                <template v-slot:action="{ attrs }">
+                    <v-btn text v-bind="attrs" @click="errorMessage = null">
+                        Zamknij
+                    </v-btn>
+                </template>
+            </v-snackbar>
     </v-card>
 
 </template>
@@ -68,20 +71,25 @@ export default {
                 const response = await fetch('api/dailyPallets', {
                     method: 'POST'
                 });
-                const json = await response.json();
                 if (response.status == 400) {
+                    const json = await response.json();
                     this.errorMessage = json.errorMessage;
                     // alert(json.errorMessage)
                 }
                 await this.fetchDailyPallets();
             } finally {
                 this.disabled = false
-            }
+            },
+            onSnackbarInput(onSnackbarValue) {
+                if (onSnackbarValue == false) {
+                    this.errorMessage = null;
+                }
+            },
         },
-    },
-    mounted() {
-        this.fetchDailyPallets();
-    },
+        mounted() {
+            this.fetchDailyPallets();
+        },
+    }
 }
 </script>
 
