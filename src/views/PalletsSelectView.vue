@@ -28,7 +28,7 @@
             </v-btn>
         </v-card-actions>
 
-        <v-snackbar color="red" :value="errorMessage != null" :multi-line="multiLine">
+        <v-snackbar color="red" :value="errorMessage != null">
             {{ errorMessage }}
 
             <template v-slot:action="{ attrs }">
