@@ -3,7 +3,7 @@
         <v-card-title>Palety w kolejce</v-card-title>
 
         <v-list class="scroll" max-height="50vh">
-            <v-list-item-group v-model="selectedItem" color="primary">
+            <v-list-item-group v-model="selectedPallet" color="primary">
 
                 <v-list-item v-for="pallet in pallets" :key="pallet.id" dense>
                     <v-list-item-content>
@@ -16,12 +16,12 @@
         </v-list>
 
         <v-card-actions>
-            <v-btn text depressed :disabled="selectedItem == null" @click="goToPalletCheck">
+            <v-btn text depressed :disabled="selectedPallet == null" @click="goToPalletCheck">
                 <v-icon left>
                     mdi-arrow-right-bold
                 </v-icon>Przejdź do kontroli palety
             </v-btn>
-            <v-btn text @click="generateNewPallets" :disabled="disabledButton">
+            <v-btn text @click="generateNewPallets" :disabled="generateNewPalletsButtonDisabled">
                 <v-icon left>
                     mdi-playlist-plus
                 </v-icon>Wygeneruj nowe palety
@@ -47,8 +47,8 @@ export default {
         return {
             pallets: null,
             errorMessage: null,
-            selectedItem: null,
-            disabledButton: false,
+            selectedPallet: null,
+            generateNewPalletsButtonDisabled: false,
         }
     },
     methods: {
@@ -59,7 +59,7 @@ export default {
         },
         goToPalletCheck() {
             console.log(this.pallets)
-            alert('Wybrana paleta: ' + this.pallets[this.selectedItem].number);
+            alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
         },
         async generateNewPallets() {
             this.disabled = true;
