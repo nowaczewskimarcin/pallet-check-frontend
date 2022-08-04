@@ -91,7 +91,7 @@ export default {
 
 <style scoped>
 .v-list-item {
-    margin: 0;
+    margin: 0 0 0 3vh;
     padding: 0;
 }
 
