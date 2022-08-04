@@ -21,35 +21,26 @@
                     mdi-arrow-right-bold
                 </v-icon>Przejdź do kontroli palety
             </v-btn>
-            <v-btn text @click="generateNewPallets" :disabled="disabled">
+            <v-btn text @click="generateNewPallets" :disabled="disabledButton">
                 <v-icon left>
                     mdi-playlist-plus
                 </v-icon>Wygeneruj nowe palety
             </v-btn>
         </v-card-actions>
 
-<<<<<<< HEAD
-        <<<<<<< HEAD <v-snackbar color="red" :value="errorMessage != null">
-            =======
-            <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput" :multi-line="multiLine">
-                >>>>>>> 75da531af51acb6cbaf8ac690a6e8c879ed0ed2d
-                {{ errorMessage }}
-=======
-        <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput" :multi-line="multiLine">
+        <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput">
             {{ errorMessage }}
->>>>>>> 77a5b32d41fc3e3bf63eb2656dd9bccba6895da5
 
-                <template v-slot:action="{ attrs }">
-                    <v-btn text v-bind="attrs" @click="errorMessage = null">
-                        Zamknij
-                    </v-btn>
-                </template>
-            </v-snackbar>
+            <template v-slot:action="{ attrs }">
+                <v-btn text v-bind="attrs" @click="errorMessage = null">
+                    Zamknij
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-card>
 
 </template>
 <script>
-
 export default {
     name: 'PalletsSelectView',
     data() {
@@ -57,7 +48,7 @@ export default {
             pallets: null,
             errorMessage: null,
             selectedItem: null,
-            disabled: false,
+            disabledButton: false,
         }
     },
     methods: {
@@ -84,22 +75,6 @@ export default {
                 await this.fetchDailyPallets();
             } finally {
                 this.disabled = false
-            },
-            onSnackbarInput(onSnackbarValue) {
-                if (onSnackbarValue == false) {
-                    this.errorMessage = null;
-                }
-            },
-        },
-<<<<<<< HEAD
-        mounted() {
-            this.fetchDailyPallets();
-        },
-    }
-=======
-        onSnackbarInput(onSnackbarValue) {
-            if (onSnackbarValue == false) {
-                this.errorMessage = null;
             }
         },
         onSnackbarInput(onSnackbarValue) {
@@ -111,7 +86,6 @@ export default {
     mounted() {
         this.fetchDailyPallets();
     },
->>>>>>> 77a5b32d41fc3e3bf63eb2656dd9bccba6895da5
 }
 </script>
 
@@ -128,7 +102,6 @@ html {
 .v-list-item {
     margin: 0;
     padding: 0;
-
 }
 
 .scroll {
