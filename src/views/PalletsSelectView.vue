@@ -2,7 +2,7 @@
     <v-card class="mx-auto" max-width="1000" tile>
         <v-card-title>Palety w kolejce</v-card-title>
 
-        <v-list rounded>
+        <v-list>
             <v-list-item-group v-model="selectedItem" color="primary" dense>
                 <v-list-item v-for="pallet in pallets" :key="pallet.id">
                     <v-list-item-content>
@@ -32,7 +32,7 @@
 
             <template v-slot:action="{ attrs }">
                 <v-btn text v-bind="attrs" @click="errorMessage = null">
-                    Zamnkij
+                    Zamknij
                 </v-btn>
             </template>
         </v-snackbar>
