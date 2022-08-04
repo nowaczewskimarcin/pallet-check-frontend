@@ -1,8 +1,8 @@
 <template>
-    <v-card class="mx-auto" max-width="1000" max-height="500px" tile>
+    <v-card class="mx-auto" max-width="1000" tile>
         <v-card-title>Palety w kolejce</v-card-title>
 
-        <v-list class="scroll">
+        <v-list class="scroll" max-height="50vh">
             <v-list-item-group v-model="selectedItem" color="primary">
 
                 <v-list-item v-for="pallet in pallets" :key="pallet.id" dense>
@@ -70,6 +70,7 @@ export default {
                 if (response.status == 400) {
                     const json = await response.json();
                     this.errorMessage = json.errorMessage;
+                    // alert(json.errorMessage)
                 }
                 await this.fetchDailyPallets();
             } finally {
