@@ -28,7 +28,7 @@
             </v-btn>
         </v-card-actions>
 
-        <v-snackbar color="red" :value="errorMessage != null" :multi-line="multiLine">
+        <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput" :multi-line="multiLine">
             {{ errorMessage }}
 
             <template v-slot:action="{ attrs }">
@@ -68,14 +68,24 @@ export default {
                 const response = await fetch('api/dailyPallets', {
                     method: 'POST'
                 });
-                const json = await response.json();
                 if (response.status == 400) {
+                    const json = await response.json();
                     this.errorMessage = json.errorMessage;
                     // alert(json.errorMessage)
                 }
                 await this.fetchDailyPallets();
             } finally {
                 this.disabled = false
+            }
+        },
+        onSnackbarInput(onSnackbarValue) {
+            if (onSnackbarValue == false) {
+                this.errorMessage = null;
+            }
+        },
+        onSnackbarInput(onSnackbarValue) {
+            if (onSnackbarValue == false) {
+                this.errorMessage = null;
             }
         },
     },
