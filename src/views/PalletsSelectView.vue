@@ -28,11 +28,16 @@
             </v-btn>
         </v-card-actions>
 
+<<<<<<< HEAD
         <<<<<<< HEAD <v-snackbar color="red" :value="errorMessage != null">
             =======
             <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput" :multi-line="multiLine">
                 >>>>>>> 75da531af51acb6cbaf8ac690a6e8c879ed0ed2d
                 {{ errorMessage }}
+=======
+        <v-snackbar color="red" :value="errorMessage != null" @input="onSnackbarInput" :multi-line="multiLine">
+            {{ errorMessage }}
+>>>>>>> 77a5b32d41fc3e3bf63eb2656dd9bccba6895da5
 
                 <template v-slot:action="{ attrs }">
                     <v-btn text v-bind="attrs" @click="errorMessage = null">
@@ -86,10 +91,27 @@ export default {
                 }
             },
         },
+<<<<<<< HEAD
         mounted() {
             this.fetchDailyPallets();
         },
     }
+=======
+        onSnackbarInput(onSnackbarValue) {
+            if (onSnackbarValue == false) {
+                this.errorMessage = null;
+            }
+        },
+        onSnackbarInput(onSnackbarValue) {
+            if (onSnackbarValue == false) {
+                this.errorMessage = null;
+            }
+        },
+    },
+    mounted() {
+        this.fetchDailyPallets();
+    },
+>>>>>>> 77a5b32d41fc3e3bf63eb2656dd9bccba6895da5
 }
 </script>
 
