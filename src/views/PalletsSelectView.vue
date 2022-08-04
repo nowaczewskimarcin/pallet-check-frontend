@@ -90,15 +90,6 @@ export default {
 </script>
 
 <style scoped>
-html {
-    overflow: hidden !important;
-}
-
-.v-card {
-    display: flex !important;
-    flex-direction: column;
-}
-
 .v-list-item {
     margin: 0;
     padding: 0;
