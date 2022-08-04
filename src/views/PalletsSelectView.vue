@@ -1,10 +1,11 @@
 <template>
-    <v-card class="mx-auto" max-width="1000" tile>
+    <v-card class="mx-auto" max-width="1000" max-height="500px" tile>
         <v-card-title>Palety w kolejce</v-card-title>
 
-        <v-list>
-            <v-list-item-group v-model="selectedItem" color="primary" dense>
-                <v-list-item v-for="pallet in pallets" :key="pallet.id">
+        <v-list class="scroll">
+            <v-list-item-group v-model="selectedItem" color="primary">
+
+                <v-list-item v-for="pallet in pallets" :key="pallet.id" dense>
                     <v-list-item-content>
                         <v-list-item-title>
                             {{ pallet.number }}
@@ -20,7 +21,7 @@
                     mdi-arrow-right-bold
                 </v-icon>Przejdź do kontroli palety
             </v-btn>
-            <v-btn text @click="generateNewPallets">
+            <v-btn text @click="generateNewPallets" :disabled="disabled">
                 <v-icon left>
                     mdi-playlist-plus
                 </v-icon>Wygeneruj nowe palety
@@ -48,6 +49,7 @@ export default {
             pallets: null,
             errorMessage: null,
             selectedItem: null,
+            disabled: false,
         }
     },
     methods: {
@@ -61,18 +63,45 @@ export default {
             alert('Wybrana paleta: ' + this.pallets[this.selectedItem].number);
         },
         async generateNewPallets() {
-            const response = await fetch('api/dailyPallets', {
-                method: 'POST'
-            });
-            const json = await response.json();
-            if (response.status == 400) {
-                this.errorMessage = json.errorMessage;
-                // alert(json.errorMessage)
+            this.disabled = true;
+            try {
+                const response = await fetch('api/dailyPallets', {
+                    method: 'POST'
+                });
+                const json = await response.json();
+                if (response.status == 400) {
+                    this.errorMessage = json.errorMessage;
+                    // alert(json.errorMessage)
+                }
+                await this.fetchDailyPallets();
+            } finally {
+                this.disabled = false
             }
         },
     },
     mounted() {
         this.fetchDailyPallets();
-    }
+    },
 }
 </script>
+
+<style scoped>
+html {
+    overflow: hidden !important;
+}
+
+.v-card {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.v-list-item {
+    margin: 0;
+    padding: 0;
+
+}
+
+.scroll {
+    overflow-y: scroll
+}
+</style>

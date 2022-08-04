@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PalletsSelectView from '../views/PalletsSelectView.vue'
+import PalletCheckView from '../views/PalletCheckView.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/pallets',
     name: 'palletsSelect',
     component: PalletsSelectView
+  },
+  {
+    path: '/palletCheck',
+    name: 'palletCheck',
+    component: PalletCheckView
   },
   {
     path: '/about',
