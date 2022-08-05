@@ -1,10 +1,9 @@
 <template>
     <v-card class="mx-auto" max-width="1000" tile :loading="loading">
-
         <v-card-title>Palety w kolejce</v-card-title>
         <v-divider></v-divider>
 
-        <v-list class="scroll pallets-container" max-height="50vh">
+        <v-list class="scroll" max-height="50vh">
             <v-list-item-group v-model="selectedPallet" color="primary">
 
                 <v-list-item v-for="pallet in pallets" :key="pallet.id" dense>
@@ -76,7 +75,8 @@ export default {
                     this.errorMessage = json.errorMessage;
                 }
             } finally {
-                this.disabled = false
+                this.disabled = false;
+                this.loading = false;
             }
         },
         onSnackbarInput(onSnackbarValue) {
@@ -85,8 +85,7 @@ export default {
             }
         },
         loadingBar() {
-            this.loading = true
-            setTimeout(() => (this.loading = false), 2000)
+            this.loading = true;
         },
         async generateAndFetchPallets() {
             await this.generateNewPallets();
@@ -100,19 +99,7 @@ export default {
 </script>
 
 <style scoped>
-.v-list-item {
-    margin: 0 0 0 10px;
-    padding: 0;
-}
-
 .scroll {
     overflow-y: auto;
-}
-
-.pallets-container {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    flex-shrink: 1;
 }
 </style>
