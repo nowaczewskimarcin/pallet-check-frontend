@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-auto" max-width="1000" tile :loading="loading">
         <template slot="progress">
-            <v-progress-linear color="deep-purple" height="20" indeterminate></v-progress-linear>
+            <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
         </template>
         <v-card-title>Palety w kolejce</v-card-title>
 
