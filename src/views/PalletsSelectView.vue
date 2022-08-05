@@ -4,6 +4,7 @@
             <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
         </template>
         <v-card-title>Palety w kolejce</v-card-title>
+        <v-divider></v-divider>
 
         <v-list class="scroll" max-height="50vh">
             <v-list-item-group v-model="selectedPallet" color="primary">
@@ -17,7 +18,7 @@
                 </v-list-item>
             </v-list-item-group>
         </v-list>
-
+        <v-divider></v-divider>
         <v-card-actions>
             <v-btn text depressed :disabled="selectedPallet == null" @click="goToPalletCheck">
                 <v-icon left>
@@ -109,5 +110,9 @@ export default {
 
 .scroll {
     overflow-y: auto;
+}
+
+v-divider {
+    margin: 0;
 }
 </style>
