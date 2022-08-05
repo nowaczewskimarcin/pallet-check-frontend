@@ -11,3 +11,15 @@
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">
+html,
+.v-application--wrap{
+  height: 100vh;
+  overflow: hidden;
+}
+.v-main{
+  height: 100%;
+  overflow: hidden;
+}
+</style>
