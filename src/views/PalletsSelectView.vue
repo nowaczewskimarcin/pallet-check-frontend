@@ -111,8 +111,4 @@ export default {
 .scroll {
     overflow-y: auto;
 }
-
-v-divider {
-    margin: 0;
-}
 </style>
