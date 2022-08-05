@@ -108,6 +108,6 @@ export default {
 }
 
 .scroll {
-    overflow-y: scroll
+    overflow-y: auto;
 }
 </style>
