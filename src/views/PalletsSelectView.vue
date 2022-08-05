@@ -55,7 +55,6 @@ export default {
     },
     methods: {
         async fetchDailyPallets() {
-            this.disabled = true;
             const response = await fetch('api/dailyPallets');
             const json = await response.json();
             this.pallets = json;
@@ -65,6 +64,7 @@ export default {
             alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
         },
         async generateNewPallets() {
+            this.generateNewPalletsButtonDisabled = true;
             this.loadingBar();
             try {
                 const response = await fetch('api/dailyPallets', {
@@ -75,8 +75,8 @@ export default {
                     this.errorMessage = json.errorMessage;
                 }
             } finally {
-                this.disabled = false;
                 this.loading = false;
+                this.generateNewPalletsButtonDisabled = false;
             }
         },
         onSnackbarInput(onSnackbarValue) {
