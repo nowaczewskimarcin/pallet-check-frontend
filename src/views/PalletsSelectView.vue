@@ -69,18 +69,6 @@ export default {
         async generateNewPallets() {
             this.loadingBar();
             this.disabled = true;
-            try {
-                const response = await fetch('api/dailyPallets', {
-                    method: 'POST'
-                });
-                if (response.status == 400) {
-                    const json = await response.json();
-                    this.errorMessage = json.errorMessage;
-                }
-                await this.fetchDailyPallets();
-            } finally {
-                this.disabled = false
-            }
         },
         onSnackbarInput(onSnackbarValue) {
             if (onSnackbarValue == false) {
@@ -92,8 +80,19 @@ export default {
             setTimeout(() => (this.loading = false), 2000)
         },
         async generateAndFetchPallets() {
-            await this.fetchDailyPallets();
             await this.generateNewPallets();
+            await this.fetchDailyPallets();
+            try {
+                const response = await fetch('api/dailyPallets', {
+                    method: 'POST'
+                });
+                if (response.status == 400) {
+                    const json = await response.json();
+                    this.errorMessage = json.errorMessage;
+                }
+            } finally {
+                this.disabled = false
+            }
         }
     },
     mounted() {
