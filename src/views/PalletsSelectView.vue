@@ -56,6 +56,7 @@ export default {
     },
     methods: {
         async fetchDailyPallets() {
+            this.disabled = true;
             const response = await fetch('api/dailyPallets');
             const json = await response.json();
             this.pallets = json;
@@ -66,7 +67,17 @@ export default {
         },
         async generateNewPallets() {
             this.loadingBar();
-            this.disabled = true;
+            try {
+                const response = await fetch('api/dailyPallets', {
+                    method: 'POST'
+                });
+                if (response.status == 400) {
+                    const json = await response.json();
+                    this.errorMessage = json.errorMessage;
+                }
+            } finally {
+                this.disabled = false
+            }
         },
         onSnackbarInput(onSnackbarValue) {
             if (onSnackbarValue == false) {
@@ -80,17 +91,6 @@ export default {
         async generateAndFetchPallets() {
             await this.generateNewPallets();
             await this.fetchDailyPallets();
-            try {
-                const response = await fetch('api/dailyPallets', {
-                    method: 'POST'
-                });
-                if (response.status == 400) {
-                    const json = await response.json();
-                    this.errorMessage = json.errorMessage;
-                }
-            } finally {
-                this.disabled = false
-            }
         }
     },
     mounted() {
