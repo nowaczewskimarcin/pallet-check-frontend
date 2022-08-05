@@ -6,7 +6,7 @@
         <v-card-title>Palety w kolejce</v-card-title>
         <v-divider></v-divider>
 
-        <v-list class="scroll" max-height="50vh">
+        <v-list class="scroll pallets-container" max-height="50vh">
             <v-list-item-group v-model="selectedPallet" color="primary">
 
                 <v-list-item v-for="pallet in pallets" :key="pallet.id" dense>
@@ -110,5 +110,12 @@ export default {
 
 .scroll {
     overflow-y: auto;
+}
+
+.pallets-container {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 </style>
