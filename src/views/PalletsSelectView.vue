@@ -1,4 +1,5 @@
 <template>
+
     <v-card class="mx-auto" max-width="1000" tile :loading="loading">
         <v-card-title>Palety w kolejce</v-card-title>
         <v-divider></v-divider>
