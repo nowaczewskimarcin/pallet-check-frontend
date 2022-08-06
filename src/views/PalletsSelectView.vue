@@ -16,7 +16,7 @@
             </v-list-item-group>
         </v-list>
         <v-divider></v-divider>
-        <v-card-actions>
+        <v-card-actions class="justify-center">
             <v-btn text depressed :disabled="selectedPallet == null" @click="goToPalletCheck">
                 <v-icon left>
                     mdi-arrow-right-bold
