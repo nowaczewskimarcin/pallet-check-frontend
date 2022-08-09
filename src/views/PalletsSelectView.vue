@@ -4,7 +4,7 @@
         <v-card-title>Palety w kolejce</v-card-title>
         <v-divider></v-divider>
 
-        <v-list class="scroll" max-height="50vh">
+        <v-list class="scroll">
             <v-list-item-group v-model="selectedPallet" color="primary">
 
                 <v-list-item v-for="pallet in pallets" :key="pallet.id" dense>
@@ -23,7 +23,7 @@
                     mdi-arrow-right-bold
                 </v-icon>Przejdź do kontroli palety
             </v-btn>
-            <v-btn text @click="generateAndFetchPallets" :disabled="generateNewPalletsButtonDisabled">
+            <v-btn text @click="generateAndFetchPallets" :disabled="loading">
                 <v-icon left>
                     mdi-playlist-plus
                 </v-icon>Wygeneruj nowe palety
@@ -50,7 +50,6 @@ export default {
             pallets: null,
             errorMessage: null,
             selectedPallet: null,
-            generateNewPalletsButtonDisabled: false,
             loading: false,
         }
     },
@@ -65,19 +64,12 @@ export default {
             alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
         },
         async generateNewPallets() {
-            this.generateNewPalletsButtonDisabled = true;
-            this.loadingBar();
-            try {
-                const response = await fetch('api/dailyPallets', {
-                    method: 'POST'
-                });
-                if (response.status == 400) {
-                    const json = await response.json();
-                    this.errorMessage = json.errorMessage;
-                }
-            } finally {
-                this.loading = false;
-                this.generateNewPalletsButtonDisabled = false;
+            const response = await fetch('api/dailyPallets', {
+                method: 'POST'
+            });
+            if (response.status == 400) {
+                const json = await response.json();
+                this.errorMessage = json.errorMessage;
             }
         },
         onSnackbarInput(onSnackbarValue) {
@@ -85,12 +77,14 @@ export default {
                 this.errorMessage = null;
             }
         },
-        loadingBar() {
-            this.loading = true;
-        },
         async generateAndFetchPallets() {
-            await this.generateNewPallets();
-            await this.fetchDailyPallets();
+            this.loading = true;
+            try {
+                await this.generateNewPallets();
+                await this.fetchDailyPallets();
+            } finally {
+                this.loading = false;
+            }
         }
     },
     mounted() {
@@ -100,6 +94,16 @@ export default {
 </script>
 
 <style scoped>
+.v-card{
+    height: calc(100% - 50px);
+    display:flex;
+    flex-direction: column;
+}
+
+.v-list{
+    flex-grow: 1;
+    flex-shrink: 1;
+}
 .scroll {
     overflow-y: auto;
 }
