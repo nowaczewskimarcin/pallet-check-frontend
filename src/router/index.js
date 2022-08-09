@@ -12,10 +12,16 @@ const routes = [
     component: PalletsSelectView
   },
   {
-    path: '/palletCheck',
+    path: '/palletcheck',
     name: 'palletCheck',
     component: PalletCheckView
   },
+  // {
+  //   path: '/palletcheck/:pallet', props: true, name: 'palletCheck', component: () => import('views/PalletCheckView.vue'),
+  //   name: 'palletcheck/',
+  //   component: PalletCheckView
+  // }
+  // { path: '/palletcheck/:palletnumber', props: true, name: 'PalletCheckView', component: () => import('../views/PalletCheckView.vue') },
 ]
 
 const router = new VueRouter({
