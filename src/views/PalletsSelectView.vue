@@ -45,6 +45,10 @@
 <script>
 export default {
     name: 'PalletsSelectView',
+    props: {
+        singlePallet: Number,
+        required: true,
+    },
     data() {
         return {
             pallets: null,
@@ -60,9 +64,8 @@ export default {
             this.pallets = json;
         },
         goToPalletCheck() {
-            console.log(this.pallets)
-            alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
-            // this.$router.push('/checkpallet/' + this.pallets[this.selectedPallet].number);
+            const singlePallet = this.pallets[this.selectedPallet].number;
+            this.$router.push('/palletcheck/' + singlePallet);
         },
         async generateNewPallets() {
             const response = await fetch('api/dailyPallets', {

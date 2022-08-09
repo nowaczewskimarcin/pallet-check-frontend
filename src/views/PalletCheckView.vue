@@ -1,7 +1,7 @@
 <template>
 
     <v-card class="mx-auto" max-width="1000">
-        <v-card-title>Paleta do sprawdzenia nr </v-card-title>
+        <v-card-title>Paleta do sprawdzenia nr {{ $route.params.singlePallet }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
 
             <v-row no-gutters class="mb-5 mx-auto text-decoration-underline">

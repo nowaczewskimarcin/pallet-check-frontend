@@ -16,12 +16,7 @@ const routes = [
     name: 'palletCheck',
     component: PalletCheckView
   },
-  // {
-  //   path: '/palletcheck/:pallet', props: true, name: 'palletCheck', component: () => import('views/PalletCheckView.vue'),
-  //   name: 'palletcheck/',
-  //   component: PalletCheckView
-  // }
-  // { path: '/palletcheck/:palletnumber', props: true, name: 'PalletCheckView', component: () => import('../views/PalletCheckView.vue') },
+  { path: '/palletcheck/:singlePallet', props: true, name: 'singleSelectedPallet', component: () => import('../views/PalletCheckView.vue') },
 ]
 
 const router = new VueRouter({
