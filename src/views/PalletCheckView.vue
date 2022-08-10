@@ -1,8 +1,7 @@
 <template>
 
     <v-card class="mx-auto" max-width="1000">
-        <v-card-title :palletId="palletId">Paleta do sprawdzenia nr {{ palletId }}</v-card-title>
-        {{ $route.params.singlePallet }}
+        <v-card-title :palletId="palletId">Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
 
             <v-row no-gutters class="mb-5 mx-auto text-decoration-underline">
@@ -118,6 +117,10 @@ export default {
             required: true,
             type: String,
         },
+        selectedPalletNumber: {
+            required: true,
+            type: String,
+        }
     },
     data() {
         return {

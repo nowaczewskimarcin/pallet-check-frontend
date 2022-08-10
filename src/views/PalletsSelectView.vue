@@ -60,9 +60,8 @@ export default {
             this.pallets = json;
         },
         goToPalletCheck() {
-            // const singlePallet = this.pallets[this.selectedPallet].number;
-            // this.$router.push('/palletcheck/' + singlePallet);
-            this.$router.push({ name: 'palletCheck', params: { palletId: palletId } })
+            const selectedPalletId = this.pallets[this.selectedPallet].id;
+            this.$router.push({ name: 'palletCheck', params: { palletId: selectedPalletId } })
         },
         async generateNewPallets() {
             const response = await fetch('api/dailyPallets', {
