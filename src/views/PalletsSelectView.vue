@@ -45,10 +45,6 @@
 <script>
 export default {
     name: 'PalletsSelectView',
-    props: {
-        singlePallet: Number,
-        required: true,
-    },
     data() {
         return {
             pallets: null,
@@ -64,8 +60,9 @@ export default {
             this.pallets = json;
         },
         goToPalletCheck() {
-            const singlePallet = this.pallets[this.selectedPallet].number;
-            this.$router.push('/palletcheck/' + singlePallet);
+            // const singlePallet = this.pallets[this.selectedPallet].number;
+            // this.$router.push('/palletcheck/' + singlePallet);
+            this.$router.push({ name: 'palletCheck', params: { palletId: palletId } })
         },
         async generateNewPallets() {
             const response = await fetch('api/dailyPallets', {

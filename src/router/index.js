@@ -11,7 +11,7 @@ const routes = [
     name: 'palletsSelect',
     component: PalletsSelectView
   },
-  { path: '/palletcheck/:singlePallet', props: true, name: 'singleSelectedPallet', component: () => import('../views/PalletCheckView.vue') },
+  { path: '/palletcheck/:palletId', props: true, name: 'palletCheck', component: PalletCheckView },
 ]
 
 const router = new VueRouter({
