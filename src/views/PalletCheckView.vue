@@ -28,7 +28,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field v-model="palletData.label1.comment"></v-text-field>
+                        <v-text-field class="ma-0 pa-0" v-model="palletData.label1.comment">
+                        </v-text-field>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
@@ -36,13 +37,13 @@
                         Zachowanie zasady ciężkiie/lekkie
                     </v-col>
                     <v-col>
-                        <v-radio-group row required v-model="palletData.label2">
+                        <v-radio-group row required v-model="palletData.label2" class="ma-0 pa-0">
                             <v-radio row label="Tak" value="true" color="success"></v-radio>
                             <v-radio row label="Nie" value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field></v-text-field>
+                        <v-text-field class="ma-0 pa-0"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
@@ -50,13 +51,13 @@
                         Stabilne ułozenie towaru na palecie
                     </v-col>
                     <v-col>
-                        <v-radio-group row required v-model="palletData.label3">
+                        <v-radio-group class="ma-0 pa-0" row required v-model="palletData.label3">
                             <v-radio row label="Tak" value="true" color="success"></v-radio>
                             <v-radio row label="Nie" value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field></v-text-field>
+                        <v-text-field class="ma-0 pa-0"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
@@ -64,13 +65,13 @@
                         Towar wystaje poza obrys
                     </v-col>
                     <v-col>
-                        <v-radio-group row required v-model="palletData.label4">
+                        <v-radio-group class="ma-0 pa-0" row required v-model="palletData.label4">
                             <v-radio row label="Tak" value="true" color="success"></v-radio>
                             <v-radio row label="Nie" value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field></v-text-field>
+                        <v-text-field class="ma-0 pa-0"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
@@ -78,13 +79,13 @@
                         Obecność etykiety adresowej
                     </v-col>
                     <v-col>
-                        <v-radio-group row required v-model="palletData.label5">
+                        <v-radio-group class="ma-0 pa-0" row required v-model="palletData.label5">
                             <v-radio row label="Tak" value="true" color="success"></v-radio>
                             <v-radio row label="Nie" value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field></v-text-field>
+                        <v-text-field class="ma-0 pa-0"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
@@ -92,13 +93,13 @@
                         Poprawne zabezpieczenie folią
                     </v-col>
                     <v-col>
-                        <v-radio-group row required v-model="palletData.label6">
+                        <v-radio-group class="ma-0 pa-0" row required v-model="palletData.label6">
                             <v-radio row label="Tak" value="true" color="success"></v-radio>
                             <v-radio row label="Nie" value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field></v-text-field>
+                        <v-text-field class="ma-0 pa-0"></v-text-field>
                     </v-col>
                 </v-row>
 
@@ -151,8 +152,4 @@ export default {
 </script>
 
 <style scoped>
-.v-input--selection-controls {
-    margin-top: 0;
-    padding-top: 0;
-}
 </style>
