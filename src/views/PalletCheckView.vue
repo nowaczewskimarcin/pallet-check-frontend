@@ -22,7 +22,7 @@
                         Wysokość palety poniżej 1,8m
                     </v-col>
                     <v-col>
-                        <v-radio-group row mandatory required v-model="palletData.label1.trueOrFalse">
+                        <v-radio-group class="ma-0 pa-0" row mandatory required v-model="palletData.label1.trueOrFalse">
                             <v-radio row label="Tak" value="true" color="success"></v-radio>
                             <v-radio row label="Nie" value="false" color="error"></v-radio>
                         </v-radio-group>
