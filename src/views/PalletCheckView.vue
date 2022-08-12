@@ -123,25 +123,17 @@ export default {
         return {
             valid: false,
             palletStatusUpdateModel: {
-                isCorrectHeight: Boolean,
+                isCorrectHeight: true,
                 heightComment: '',
-                isHeavyLightRule: Boolean,
+                isHeavyLightRule: true,
                 heavyLightRuleComment: '',
-                isStable: Boolean,
+                isStable: true,
                 stabilityComment: '',
-                hasAddressLabel: Boolean,
+                hasAddressLabel: true,
                 addressLabelComment: '',
-                isWrappedWithStretch: Boolean,
+                isWrappedWithStretch: true,
                 stretchWrapComment: '',
             },
-            // palletData: {
-            //     label1: { label: 'Wysokość palety poniżej 1,8m', trueOrFalse: Boolean, comment: null },
-            //     label2: { label: 'Zachowanie zasady ciężkiie/lekkie', trueOrFalse: Boolean, comment: null },
-            //     label3: { label: 'Stabilne ułozenie towaru na palecie', trueOrFalse: Boolean, comment: null },
-            //     label4: { label: 'Towar wystaje poza obrys', trueOrFalse: Boolean, comment: null },
-            //     label5: { label: 'Obecność etykiety adresowej', trueOrFalse: Boolean, comment: null },
-            //     label6: { label: 'Poprawne zabezpieczenie folią', trueOrFalse: Boolean, comment: null },
-            // },   
         }
     },
     methods: {
@@ -169,12 +161,23 @@ export default {
         },
         async approvePallet() {
             axios({
-                method: 'post',
+                method: 'POST',
                 url: '/api/PalletsStatuses/' + this.palletId,
-                data: {
-                    data: this.palletStatusUpdateModel,
-                }
+                data: this.palletStatusUpdateModel,
+                headers: { "Content-Type": "application/json" },
             });
+            // if (error.response) {
+
+            //     console.log('Błąd: error response')
+            // } else if (error.request) {
+
+            //     console.log('Błąd: error request')
+
+            // } else if (error.message) {
+
+            //     console.log('Błąd: wyświetla wiadomość')
+
+            // }
         },
     }
 }
