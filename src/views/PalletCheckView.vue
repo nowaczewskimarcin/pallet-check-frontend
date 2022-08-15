@@ -1,9 +1,9 @@
 <template>
-    <v-form ref="form" v-model="valid" lazy-validation>
-        <v-card class="mx-auto" max-width="1000">
-            <v-card-title :palletId="palletId">Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
-            <v-container class="mb-3 pa-md-5 mx-lg-auto">
 
+    <v-card class="mx-auto" max-width="1000">
+        <v-card-title :palletId="palletId">Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
+        <v-container class="mb-3 pa-md-5 mx-lg-auto">
+            <v-form ref="form" v-model="valid" lazy-validation>
 
 
                 <v-row no-gutters class="mb-5 mx-auto text-decoration-underline">
@@ -24,8 +24,8 @@
                     <v-col>
                         <v-radio-group class="ma-0 pa-0" row mandatory required
                             v-model="palletStatusUpdateModel.isCorrectHeight">
-                            <v-radio row label="Tak" value="true" color="success"></v-radio>
-                            <v-radio row label="Nie" value="false" color="error"></v-radio>
+                            <v-radio row label="Tak" :value="true" color="success"></v-radio>
+                            <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
@@ -40,8 +40,8 @@
                     <v-col>
                         <v-radio-group row required v-model="palletStatusUpdateModel.isHeavyLightRule"
                             class="ma-0 pa-0">
-                            <v-radio row label="Tak" value="true" color="success"></v-radio>
-                            <v-radio row label="Nie" value="false" color="error"></v-radio>
+                            <v-radio row label="Tak" :value="true" color="success"></v-radio>
+                            <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
@@ -55,8 +55,8 @@
                     </v-col>
                     <v-col>
                         <v-radio-group class="ma-0 pa-0" row required v-model="palletStatusUpdateModel.isStable">
-                            <v-radio row label="Tak" value="true" color="success"></v-radio>
-                            <v-radio row label="Nie" value="false" color="error"></v-radio>
+                            <v-radio row label="Tak" :value="true" color="success"></v-radio>
+                            <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
@@ -70,8 +70,8 @@
                     </v-col>
                     <v-col>
                         <v-radio-group class="ma-0 pa-0" row required v-model="palletStatusUpdateModel.hasAddressLabel">
-                            <v-radio row label="Tak" value="true" color="success"></v-radio>
-                            <v-radio row label="Nie" value="false" color="error"></v-radio>
+                            <v-radio row label="Tak" :value="true" color="success"></v-radio>
+                            <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
@@ -86,8 +86,8 @@
                     <v-col>
                         <v-radio-group class="ma-0 pa-0" row required
                             v-model="palletStatusUpdateModel.isWrappedWithStretch">
-                            <v-radio row label="Tak" value="true" color="success"></v-radio>
-                            <v-radio row label="Nie" value="false" color="error"></v-radio>
+                            <v-radio row label="Tak" :value="true" color="success"></v-radio>
+                            <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col>
@@ -103,10 +103,10 @@
                     </v-btn>
                 </v-card-actions>
 
+            </v-form>
+        </v-container>
+    </v-card>
 
-            </v-container>
-        </v-card>
-    </v-form>
 </template>
 <script>
 import axios from 'axios';
@@ -122,17 +122,19 @@ export default {
     data() {
         return {
             valid: false,
+            true: true,
+            false: false,
             palletStatusUpdateModel: {
                 isCorrectHeight: true,
-                heightComment: '',
+                heightComment: null,
                 isHeavyLightRule: true,
-                heavyLightRuleComment: '',
+                heavyLightRuleComment: null,
                 isStable: true,
-                stabilityComment: '',
+                stabilityComment: null,
                 hasAddressLabel: true,
-                addressLabelComment: '',
+                addressLabelComment: null,
                 isWrappedWithStretch: true,
-                stretchWrapComment: '',
+                stretchWrapComment: null,
             },
         }
     },
@@ -141,20 +143,6 @@ export default {
             this.$router.push('/')
         },
         validate() {
-            // const form = document.querySelector("form");
-            // const dataToSend = new FormData(form);
-            // form.sendForm = (e) => {
-            //     console.log(dataToSend)
-            //     fetch('form.php', {
-            //         method: 'POST',
-            //         headers: { 'Content-Type': 'application/json' },
-            //         body: JSON.stringify({ isCorrectHeight: palletStatusUpdateModel.isCorrectHeight })
-
-            //     }).then((res) => {
-            //         console.log(res)
-            //     }).catch((err) =>
-            //         console.log(err));
-            // }
             this.$refs.form.validate();
             console.log('kliknięto wysyłanie')
             // console.log(this.palletStatusUpdateModel)
@@ -166,6 +154,7 @@ export default {
                 data: this.palletStatusUpdateModel,
                 headers: { "Content-Type": "application/json" },
             });
+            console.log(this.palletStatusUpdateModel)
             // if (error.response) {
 
             //     console.log('Błąd: error response')
