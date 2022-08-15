@@ -1,10 +1,8 @@
 <template>
-
     <v-card class="mx-auto" max-width="1000">
         <v-card-title :palletId="palletId">Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" v-model="valid" lazy-validation>
-
 
                 <v-row no-gutters class="mb-5 mx-auto text-decoration-underline">
                     <v-col>
@@ -140,33 +138,11 @@ export default {
     },
     methods: {
         returnToMenu() {
-            this.$router.push('/')
-        },
-        validate() {
-            this.$refs.form.validate();
-            console.log('kliknięto wysyłanie')
-            // console.log(this.palletStatusUpdateModel)
+            this.$router.push('/');
         },
         async approvePallet() {
-            axios({
-                method: 'POST',
-                url: '/api/PalletsStatuses/' + this.palletId,
-                data: this.palletStatusUpdateModel,
-                headers: { "Content-Type": "application/json" },
-            });
-            console.log(this.palletStatusUpdateModel)
-            // if (error.response) {
-
-            //     console.log('Błąd: error response')
-            // } else if (error.request) {
-
-            //     console.log('Błąd: error request')
-
-            // } else if (error.message) {
-
-            //     console.log('Błąd: wyświetla wiadomość')
-
-            // }
+            axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
+            console.log(this.palletStatusUpdateModel);
         },
     }
 }
