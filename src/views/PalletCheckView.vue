@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto" max-width="1000">
+    <v-card class="mx-auto" max-width="1000" :loading="loading">
         <v-card-title :palletId="palletId">Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" v-model="valid" lazy-validation>
@@ -22,6 +22,7 @@
                     <v-col>
                         <v-radio-group class="ma-0 pa-0" row mandatory required
                             v-model="palletStatusUpdateModel.isCorrectHeight">
+
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
@@ -33,7 +34,7 @@
                 </v-row>
                 <v-row no-gutters>
                     <v-col>
-                        Zachowanie zasady ciężkiie/lekkie
+                        Zachowanie zasady ciężkie/lekkie
                     </v-col>
                     <v-col>
                         <v-radio-group row required v-model="palletStatusUpdateModel.isHeavyLightRule"
@@ -96,7 +97,7 @@
 
                 <v-card-actions class="text-center">
                     <v-btn @click="returnToMenu">Anuluj</v-btn>
-                    <v-btn :disabled="!valid" color="success" class="mr-4" @click="approvePallet">
+                    <v-btn color="success" class="mr-4" @click="approvePallet">
                         Zatwierdź
                     </v-btn>
                 </v-card-actions>
@@ -120,18 +121,19 @@ export default {
     data() {
         return {
             valid: false,
+            loading: false,
             true: true,
             false: false,
             palletStatusUpdateModel: {
-                isCorrectHeight: true,
+                isCorrectHeight: null,
                 heightComment: null,
-                isHeavyLightRule: true,
+                isHeavyLightRule: null,
                 heavyLightRuleComment: null,
-                isStable: true,
+                isStable: null,
                 stabilityComment: null,
-                hasAddressLabel: true,
+                hasAddressLabel: null,
                 addressLabelComment: null,
-                isWrappedWithStretch: true,
+                isWrappedWithStretch: null,
                 stretchWrapComment: null,
             },
         }
@@ -140,9 +142,26 @@ export default {
         returnToMenu() {
             this.$router.push('/');
         },
+        checkRadioButtons() {
+            this.loading = true;
+            if (
+                this.palletStatusUpdateModel.isCorrectHeight.value == true || false &&
+                this.palletStatusUpdateModel.isHeavyLightRule.value == true || false &&
+                this.palletStatusUpdateModel.isStable.value == true || false &&
+                this.palletStatusUpdateModel.hasAddressLabel.value == true || false &&
+                this.palletStatusUpdateModel.isWrappedWithStretch.value == true || false
+            ) {
+                alert('Walidacja poprawna ✅ Wszystkie opcje zostały zaznaczone.');
+            }
+            else {
+                alert('Walidacja niepoprawna ❌ Wszystkie opcje muszą zostać zaznaczone.')
+            }
+        },
         async approvePallet() {
+            this.checkRadioButtons();
             axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
             console.log(this.palletStatusUpdateModel);
+            this.loading = false;
         },
     }
 }
