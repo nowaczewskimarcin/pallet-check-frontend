@@ -20,9 +20,7 @@
                         Wysokość palety poniżej 1,8m
                     </v-col>
                     <v-col>
-                        <v-radio-group class="ma-0 pa-0" row mandatory required
-                            v-model="palletStatusUpdateModel.isCorrectHeight">
-
+                        <v-radio-group class="ma-0 pa-0" row required v-model="palletStatusUpdateModel.isCorrectHeight">
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
@@ -142,26 +140,9 @@ export default {
         returnToMenu() {
             this.$router.push('/');
         },
-        checkRadioButtons() {
-            this.loading = true;
-            if (
-                this.palletStatusUpdateModel.isCorrectHeight.value == true || false &&
-                this.palletStatusUpdateModel.isHeavyLightRule.value == true || false &&
-                this.palletStatusUpdateModel.isStable.value == true || false &&
-                this.palletStatusUpdateModel.hasAddressLabel.value == true || false &&
-                this.palletStatusUpdateModel.isWrappedWithStretch.value == true || false
-            ) {
-                alert('Walidacja poprawna ✅ Wszystkie opcje zostały zaznaczone.');
-            }
-            else {
-                alert('Walidacja niepoprawna ❌ Wszystkie opcje muszą zostać zaznaczone.')
-            }
-        },
         async approvePallet() {
-            this.checkRadioButtons();
             axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
             console.log(this.palletStatusUpdateModel);
-            this.loading = false;
         },
     }
 }
