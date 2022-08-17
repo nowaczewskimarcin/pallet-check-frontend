@@ -147,6 +147,9 @@ export default {
         async fetchPalletStatus() {
             this.loading = true;
             const response = await fetch('/api/PalletsStatuses/' + this.palletId);
+            if (response.status == 404) {
+                console.log('Aktualna paleta nie była zapisana')
+            }
             const json = await response.json();
             this.palletStatus = json;
             this.palletStatusUpdateModel.isCorrectHeight = json.isCorrectHeight;
