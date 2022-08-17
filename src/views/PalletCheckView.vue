@@ -98,7 +98,6 @@
                     <v-btn color="success" class="mr-4" @click="approvePallet">
                         Zatwierdź
                     </v-btn>
-                    <v-btn @click="fetchPalletStatus">TESTOWY PRZYCISK</v-btn>
                 </v-card-actions>
 
             </v-form>
@@ -142,9 +141,9 @@ export default {
         },
         async approvePallet() {
             axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
-            console.log(this.palletStatusUpdateModel);
         },
         async fetchPalletStatus() {
+            this.loading = true;
             const response = await fetch('/api/PalletsStatuses/' + this.palletId);
             const json = await response.json();
             this.palletStatus = json;
@@ -152,14 +151,18 @@ export default {
             this.palletStatusUpdateModel.isCorrectHeight = json.isCorrectHeight;
             this.palletStatusUpdateModel.heightComment = json.heightComment;
             this.palletStatusUpdateModel.isHeavyLightRule = json.isHeavyLightRule;
-            this.palletStatusUpdateModel.heavyLightRuleComment.json.heavyLightRuleComment;
+            this.palletStatusUpdateModel.heavyLightRuleComment = json.heavyLightRuleComment;
             this.palletStatusUpdateModel.isStable = json.isStable;
             this.palletStatusUpdateModel.stabilityComment = json.stabilityComment;
             this.palletStatusUpdateModel.hasAddressLabel = json.hasAddressLabel;
             this.palletStatusUpdateModel.addressLabelComment = json.addressLabelComment;
             this.palletStatusUpdateModel.isWrappedWithStretch = json.isWrappedWithStretch;
             this.palletStatusUpdateModel.stretchWrapComment = json.stretchWrapComment;
+            this.loading = false;
         },
+    },
+    mounted() {
+        this.fetchPalletStatus();
     }
 }
 </script>
