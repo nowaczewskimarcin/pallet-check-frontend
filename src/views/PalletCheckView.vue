@@ -2,7 +2,7 @@
     <v-card class="mx-auto" max-width="1000" :loading="loading">
         <v-card-title>Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" lazy-validation>
 
                 <v-row no-gutters class="mb-5 mx-auto text-decoration-underline">
                     <v-col>
@@ -118,9 +118,7 @@ export default {
     },
     data() {
         return {
-            valid: false,
             loading: false,
-            palletStatus: null,
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -151,7 +149,6 @@ export default {
                 console.log('Aktualna paleta nie była zapisana')
             }
             const json = await response.json();
-            this.palletStatus = json;
             this.palletStatusUpdateModel.isCorrectHeight = json.isCorrectHeight;
             this.palletStatusUpdateModel.heightComment = json.heightComment;
             this.palletStatusUpdateModel.isHeavyLightRule = json.isHeavyLightRule;
