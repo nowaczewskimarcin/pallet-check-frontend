@@ -1,6 +1,6 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title :palletId="palletId">Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
+        <v-card-title>Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" v-model="valid" lazy-validation>
 
