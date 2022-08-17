@@ -140,14 +140,15 @@ export default {
             this.$router.push('/');
         },
         async approvePallet() {
+            this.loading = true;
             axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
+            this.loading = false;
         },
         async fetchPalletStatus() {
             this.loading = true;
             const response = await fetch('/api/PalletsStatuses/' + this.palletId);
             const json = await response.json();
             this.palletStatus = json;
-            console.log(json.isCorrectHeight)
             this.palletStatusUpdateModel.isCorrectHeight = json.isCorrectHeight;
             this.palletStatusUpdateModel.heightComment = json.heightComment;
             this.palletStatusUpdateModel.isHeavyLightRule = json.isHeavyLightRule;
