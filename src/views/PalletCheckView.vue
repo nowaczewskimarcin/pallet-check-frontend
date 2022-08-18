@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title v-model="palletStatusUpdateModel">Paleta do sprawdzenia o numerze: {{
-                palletStatusUpdateModel.number
+        <v-card-title v-model="palettNumber">Paleta do sprawdzenia o numerze: {{
+                palettNumber
         }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" lazy-validation>
@@ -119,7 +119,7 @@ export default {
     data() {
         return {
             loading: false,
-
+            palettNumber: null,
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -131,7 +131,6 @@ export default {
                 addressLabelComment: null,
                 isWrappedWithStretch: null,
                 stretchWrapComment: null,
-                number: null,
             },
         }
     },
@@ -175,7 +174,7 @@ export default {
             this.palletStatusUpdateModel.addressLabelComment = palletStatus.addressLabelComment;
             this.palletStatusUpdateModel.isWrappedWithStretch = palletStatus.isWrappedWithStretch;
             this.palletStatusUpdateModel.stretchWrapComment = palletStatus.stretchWrapComment;
-            this.palletStatusUpdateModel.number = palletStatus.number;
+            this.palettNumber = palletStatus.number;
         }
     },
     mounted() {
