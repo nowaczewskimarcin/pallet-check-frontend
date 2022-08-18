@@ -119,6 +119,7 @@ export default {
     data() {
         return {
             loading: false,
+            palletStatus: null,
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -139,28 +140,40 @@ export default {
         },
         async approvePallet() {
             this.loading = true;
-            axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
-            this.loading = false;
+            try {
+                axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
+            } finally {
+                this.loading = false;
+            }
         },
         async fetchPalletStatus() {
             this.loading = true;
-            const response = await fetch('/api/PalletsStatuses/' + this.palletId);
-            if (response.status == 404) {
-                console.log('Aktualna paleta nie była zapisana')
+            // if (response.status == 404) {
+            //     console.log('Aktualna paleta nie była zapisana')
+            // }
+            try {
+                this.fetchPalletFromServer();
+                this.setFetchValue();
+            } finally {
+                this.loading = false;
             }
-            const json = await response.json();
-            this.palletStatusUpdateModel.isCorrectHeight = json.isCorrectHeight;
-            this.palletStatusUpdateModel.heightComment = json.heightComment;
-            this.palletStatusUpdateModel.isHeavyLightRule = json.isHeavyLightRule;
-            this.palletStatusUpdateModel.heavyLightRuleComment = json.heavyLightRuleComment;
-            this.palletStatusUpdateModel.isStable = json.isStable;
-            this.palletStatusUpdateModel.stabilityComment = json.stabilityComment;
-            this.palletStatusUpdateModel.hasAddressLabel = json.hasAddressLabel;
-            this.palletStatusUpdateModel.addressLabelComment = json.addressLabelComment;
-            this.palletStatusUpdateModel.isWrappedWithStretch = json.isWrappedWithStretch;
-            this.palletStatusUpdateModel.stretchWrapComment = json.stretchWrapComment;
-            this.loading = false;
         },
+        fetchPalletFromServer() {
+            const response = axios.get('/api/PalletsStatuses/' + this.palletId);
+            this.palletStatus = response;
+        },
+        setFetchValue(palletStatus) {
+            this.palletStatusUpdateModel.isCorrectHeight = this.palletStatus.isCorrectHeight;
+            this.palletStatusUpdateModel.heightComment = this.palletStatus.heightComment;
+            this.palletStatusUpdateModel.isHeavyLightRule = this.palletStatus.isHeavyLightRule;
+            this.palletStatusUpdateModel.heavyLightRuleComment = this.palletStatus.heavyLightRuleComment;
+            this.palletStatusUpdateModel.isStable = this.palletStatus.isStable;
+            this.palletStatusUpdateModel.stabilityComment = this.palletStatus.stabilityComment;
+            this.palletStatusUpdateModel.hasAddressLabel = this.palletStatus.hasAddressLabel;
+            this.palletStatusUpdateModel.addressLabelComment = this.palletStatus.addressLabelComment;
+            this.palletStatusUpdateModel.isWrappedWithStretch = this.palletStatus.isWrappedWithStretch;
+            this.palletStatusUpdateModel.stretchWrapComment = this.palletStatus.stretchWrapComment;
+        }
     },
     mounted() {
         this.fetchPalletStatus();
