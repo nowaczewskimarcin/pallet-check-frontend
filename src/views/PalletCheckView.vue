@@ -119,7 +119,6 @@ export default {
     data() {
         return {
             loading: false,
-            palletStatus: null,
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -153,26 +152,26 @@ export default {
             // }
             try {
                 this.fetchPalletFromServer();
-                this.setFetchValue();
             } finally {
                 this.loading = false;
             }
         },
-        fetchPalletFromServer() {
-            const response = axios.get('/api/PalletsStatuses/' + this.palletId);
-            this.palletStatus = response;
+        async fetchPalletFromServer() {
+            const response = await axios.get('/api/PalletsStatuses/' + this.palletId);
+            const palletStatus = response.data;
+            this.setFetchValue(palletStatus);
         },
         setFetchValue(palletStatus) {
-            this.palletStatusUpdateModel.isCorrectHeight = this.palletStatus.isCorrectHeight;
-            this.palletStatusUpdateModel.heightComment = this.palletStatus.heightComment;
-            this.palletStatusUpdateModel.isHeavyLightRule = this.palletStatus.isHeavyLightRule;
-            this.palletStatusUpdateModel.heavyLightRuleComment = this.palletStatus.heavyLightRuleComment;
-            this.palletStatusUpdateModel.isStable = this.palletStatus.isStable;
-            this.palletStatusUpdateModel.stabilityComment = this.palletStatus.stabilityComment;
-            this.palletStatusUpdateModel.hasAddressLabel = this.palletStatus.hasAddressLabel;
-            this.palletStatusUpdateModel.addressLabelComment = this.palletStatus.addressLabelComment;
-            this.palletStatusUpdateModel.isWrappedWithStretch = this.palletStatus.isWrappedWithStretch;
-            this.palletStatusUpdateModel.stretchWrapComment = this.palletStatus.stretchWrapComment;
+            this.palletStatusUpdateModel.isCorrectHeight = palletStatus.isCorrectHeight;
+            this.palletStatusUpdateModel.heightComment = palletStatus.heightComment;
+            this.palletStatusUpdateModel.isHeavyLightRule = palletStatus.isHeavyLightRule;
+            this.palletStatusUpdateModel.heavyLightRuleComment = palletStatus.heavyLightRuleComment;
+            this.palletStatusUpdateModel.isStable = palletStatus.isStable;
+            this.palletStatusUpdateModel.stabilityComment = palletStatus.stabilityComment;
+            this.palletStatusUpdateModel.hasAddressLabel = palletStatus.hasAddressLabel;
+            this.palletStatusUpdateModel.addressLabelComment = palletStatus.addressLabelComment;
+            this.palletStatusUpdateModel.isWrappedWithStretch = palletStatus.isWrappedWithStretch;
+            this.palletStatusUpdateModel.stretchWrapComment = palletStatus.stretchWrapComment;
         }
     },
     mounted() {
