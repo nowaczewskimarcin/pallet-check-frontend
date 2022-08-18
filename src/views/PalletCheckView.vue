@@ -1,6 +1,6 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title v-model="palletStatusUpdateModel.number">Paleta do sprawdzenia ID {{
+        <v-card-title v-model="palletStatusUpdateModel">Paleta do sprawdzenia ID {{
                 palletStatusUpdateModel.number
         }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
