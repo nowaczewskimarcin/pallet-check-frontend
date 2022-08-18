@@ -1,6 +1,8 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title>Paleta do sprawdzenia ID {{ palletId }}</v-card-title>
+        <v-card-title v-model="palletStatusUpdateModel.number">Paleta do sprawdzenia ID {{
+                palletStatusUpdateModel.number
+        }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" lazy-validation>
 
@@ -119,6 +121,7 @@ export default {
     data() {
         return {
             loading: false,
+
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -130,6 +133,7 @@ export default {
                 addressLabelComment: null,
                 isWrappedWithStretch: null,
                 stretchWrapComment: null,
+                number: null,
             },
         }
     },
@@ -140,7 +144,7 @@ export default {
         async approvePallet() {
             this.loading = true;
             try {
-                axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
+                await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
             } finally {
                 this.loading = false;
             }
@@ -151,7 +155,7 @@ export default {
             //     console.log('Aktualna paleta nie była zapisana')
             // }
             try {
-                this.fetchPalletFromServer();
+                await this.fetchPalletFromServer();
             } finally {
                 this.loading = false;
             }
@@ -160,6 +164,7 @@ export default {
             const response = await axios.get('/api/PalletsStatuses/' + this.palletId);
             const palletStatus = response.data;
             this.setFetchValue(palletStatus);
+            console.log(palletStatus.number)
         },
         setFetchValue(palletStatus) {
             this.palletStatusUpdateModel.isCorrectHeight = palletStatus.isCorrectHeight;
@@ -172,6 +177,7 @@ export default {
             this.palletStatusUpdateModel.addressLabelComment = palletStatus.addressLabelComment;
             this.palletStatusUpdateModel.isWrappedWithStretch = palletStatus.isWrappedWithStretch;
             this.palletStatusUpdateModel.stretchWrapComment = palletStatus.stretchWrapComment;
+            this.palletStatusUpdateModel.number = palletStatus.number;
         }
     },
     mounted() {
