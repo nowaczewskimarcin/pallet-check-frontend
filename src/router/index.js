@@ -11,11 +11,7 @@ const routes = [
     name: 'palletsSelect',
     component: PalletsSelectView
   },
-  {
-    path: '/palletCheck',
-    name: 'palletCheck',
-    component: PalletCheckView
-  },
+  { path: '/palletcheck/:palletId', props: true, name: 'palletCheck', component: PalletCheckView },
 ]
 
 const router = new VueRouter({

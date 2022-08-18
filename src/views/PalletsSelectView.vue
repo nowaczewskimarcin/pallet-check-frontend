@@ -60,8 +60,8 @@ export default {
             this.pallets = json;
         },
         goToPalletCheck() {
-            console.log(this.pallets)
-            alert('Wybrana paleta: ' + this.pallets[this.selectedPallet].number);
+            const selectedPalletId = this.pallets[this.selectedPallet].id;
+            this.$router.push({ name: 'palletCheck', params: { palletId: selectedPalletId } })
         },
         async generateNewPallets() {
             const response = await fetch('api/dailyPallets', {
@@ -85,7 +85,7 @@ export default {
             } finally {
                 this.loading = false;
             }
-        }
+        },
     },
     mounted() {
         this.fetchDailyPallets();
@@ -94,16 +94,17 @@ export default {
 </script>
 
 <style scoped>
-.v-card{
+.v-card {
     height: calc(100% - 50px);
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
-.v-list{
+.v-list {
     flex-grow: 1;
     flex-shrink: 1;
 }
+
 .scroll {
     overflow-y: auto;
 }
