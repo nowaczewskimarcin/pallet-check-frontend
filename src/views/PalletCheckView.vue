@@ -1,6 +1,6 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title v-model="palletStatusUpdateModel">Paleta do sprawdzenia ID {{
+        <v-card-title v-model="palletStatusUpdateModel">Paleta do sprawdzenia o numerze: {{
                 palletStatusUpdateModel.number
         }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
@@ -22,7 +22,7 @@
                         Wysokość palety poniżej 1,8m
                     </v-col>
                     <v-col>
-                        <v-radio-group class="ma-0 pa-0" row required v-model="palletStatusUpdateModel.isCorrectHeight">
+                        <v-radio-group class="ma-0 pa-0" row v-model="palletStatusUpdateModel.isCorrectHeight">
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
@@ -37,8 +37,7 @@
                         Zachowanie zasady ciężkie/lekkie
                     </v-col>
                     <v-col>
-                        <v-radio-group row required v-model="palletStatusUpdateModel.isHeavyLightRule"
-                            class="ma-0 pa-0">
+                        <v-radio-group row v-model="palletStatusUpdateModel.isHeavyLightRule" class="ma-0 pa-0">
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
@@ -53,7 +52,7 @@
                         Stabilne ułozenie towaru na palecie
                     </v-col>
                     <v-col>
-                        <v-radio-group class="ma-0 pa-0" row required v-model="palletStatusUpdateModel.isStable">
+                        <v-radio-group class="ma-0 pa-0" row v-model="palletStatusUpdateModel.isStable">
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
@@ -68,7 +67,7 @@
                         Obecność etykiety adresowej
                     </v-col>
                     <v-col>
-                        <v-radio-group class="ma-0 pa-0" row required v-model="palletStatusUpdateModel.hasAddressLabel">
+                        <v-radio-group class="ma-0 pa-0" row v-model="palletStatusUpdateModel.hasAddressLabel">
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
@@ -83,8 +82,7 @@
                         Poprawne zabezpieczenie folią
                     </v-col>
                     <v-col>
-                        <v-radio-group class="ma-0 pa-0" row required
-                            v-model="palletStatusUpdateModel.isWrappedWithStretch">
+                        <v-radio-group class="ma-0 pa-0" row v-model="palletStatusUpdateModel.isWrappedWithStretch">
                             <v-radio row label="Tak" :value="true" color="success"></v-radio>
                             <v-radio row label="Nie" :value="false" color="error"></v-radio>
                         </v-radio-group>
