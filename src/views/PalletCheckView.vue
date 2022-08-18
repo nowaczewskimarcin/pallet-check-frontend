@@ -161,7 +161,7 @@ export default {
             const response = await axios.get('/api/PalletsStatuses/' + this.palletId);
             const palletStatus = response.data;
             this.setFetchValue(palletStatus);
-            console.log(palletStatus.number)
+            // console.log(palletStatus.number) zostawiam tą linijke póki co bo mi sie przyda do wglądu ten consollog
         },
         setFetchValue(palletStatus) {
             this.palletStatusUpdateModel.isCorrectHeight = palletStatus.isCorrectHeight;
@@ -177,8 +177,8 @@ export default {
             this.palettNumber = palletStatus.number;
         }
     },
-    mounted() {
-        this.fetchPalletStatus();
+    async mounted() {
+        await this.fetchPalletStatus();
     }
 }
 </script>
