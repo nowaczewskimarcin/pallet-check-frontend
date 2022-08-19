@@ -176,11 +176,12 @@ export default {
             catch (err) {
                 const error = err.response.data.errorMessage;
                 console.log(err.response.data.errorMessage)
-                this.errorMessage.heightComment = error.heightComment;
-                this.errorMessage.heavyLightRuleComment = error.heavyLightRuleComment;
-                this.errorMessage.stabilityComment = error.stabilityComment;
-                this.errorMessage.addressLabelComment = error.addressLabelComment;
-                this.errorMessage.stretchWrapComment = error.stretchWrapComment;
+                const validationErrors = err.response.data.validationErrors;
+                this.errorMessage.heightComment = validationErrors.heightComment;
+                this.errorMessage.heavyLightRuleComment = validationErrors.heavyLightRuleComment;
+                this.errorMessage.stabilityComment = validationErrors.stabilityComment;
+                this.errorMessage.addressLabelComment = validationErrors.addressLabelComment;
+                this.errorMessage.stretchWrapComment = validationErrors.stretchWrapComment;
             }
             finally {
                 this.loading = false;
