@@ -174,8 +174,6 @@ export default {
 
             }
             catch (err) {
-                const error = err.response.data.errorMessage;
-                console.log(err.response.data.errorMessage)
                 const validationErrors = err.response.data.validationErrors;
                 this.errorMessage.heightComment = validationErrors.heightComment;
                 this.errorMessage.heavyLightRuleComment = validationErrors.heavyLightRuleComment;
