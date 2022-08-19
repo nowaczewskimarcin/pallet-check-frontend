@@ -28,7 +28,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.heightComment">
+                        <v-text-field :error-messages="errorMessage.heightComment" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.heightComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -43,7 +44,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.heavyLightRuleComment">
+                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.heavyLightRuleComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -58,7 +60,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.stabilityComment">
+                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.stabilityComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -73,7 +76,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.addressLabelComment">
+                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.addressLabelComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -88,7 +92,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.stretchWrapComment">
+                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.stretchWrapComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -98,8 +103,9 @@
                     <v-btn color="success" class="mr-4" @click="approvePallet">
                         Zatwierdź
                     </v-btn>
+                    <!-- <v-btn @click="checkForm" class="mr-4">Sprawdź</v-btn> -->
                 </v-card-actions>
-
+                <p>błędy: {{ errorMessage }}</p>
             </v-form>
         </v-container>
     </v-card>
@@ -120,6 +126,13 @@ export default {
         return {
             loading: false,
             palettNumber: null,
+            errorMessage: {
+                heightComment: null,
+                heavyLightRuleComment: null,
+                stabilityComment: null,
+                addressLabelComment: null,
+                stretchWrapComment: null,
+            },
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -141,22 +154,65 @@ export default {
         async approvePallet() {
             this.loading = true;
             try {
-                await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
-            } finally {
+                await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel)
+                // .catch(function (error) {
+                // if (error.response) {
+                //     console.log('Status odpowiedzi z serwera: ' + error.response.status + ' - błąd: ' + error.response.data.validationErrors.addressLabelComment);
+                //     console.log(error.response.data.validationErrors.addressLabelComment)
+                //     this.errorMessage.push(error.response.data.validationErrors.addressLabelComment);
+                // }
+                //     console.log(error)
+                //     console.log(error.response.data.errorMessage)
+                //     console.log(error.response.data.validationErrors)
+                //     if (error.response.data.validationErrors.addressLabelComment) {
+
+                //     }
+                //     console.log(error.response.data.validationErrors.addressLabelComment, error.response.data.validationErrors.stabilityComment,
+                //         error.response.data.validationErrors.heavyLightRuleComment, error.response.data.validationErrors.heightComment,
+                //         error.response.data.validationErrors.stretchWrapComment)
+                // });
+
+            }
+            catch (err) {
+                const error = err.response.data.errorMessage;
+                console.log(err.response.data.errorMessage)
+                this.errorMessage.heightComment = error.heightComment;
+                this.errorMessage.heavyLightRuleComment = error.heavyLightRuleComment;
+                this.errorMessage.stabilityComment = error.stabilityComment;
+                this.errorMessage.addressLabelComment = error.addressLabelComment;
+                this.errorMessage.stretchWrapComment = error.stretchWrapComment;
+            }
+            finally {
                 this.loading = false;
             }
         },
         async fetchPalletStatus() {
             this.loading = true;
-            // if (response.status == 404) {
-            //     console.log('Aktualna paleta nie była zapisana')
-            // }
             try {
                 await this.fetchPalletFromServer();
             } finally {
                 this.loading = false;
             }
         },
+        // checkForm(palletStatus) {
+
+        //     const dupa = palletStatus.validationErrors;
+        //     console.log(dupa)
+
+        // if (validationErrors = true) {
+        //     console.log('Wystąpił błąd')
+        // }
+        // if (this.palletStatus.status == 404) {
+        //     console.log('Aktualna paleta nie była zapisana')
+        // };
+        // if (this.palletStatus.status == 406) {
+        //     console.log('Odpowiedź z serwera: błąd 406: Not acceptable')
+        // };
+        // if (response.status == 400) {
+        //     const json = await response.json();
+        //     this.errorMessage = json.errorMessage;
+        // }
+        // },
         async fetchPalletFromServer() {
             const response = await axios.get('/api/PalletsStatuses/' + this.palletId);
             const palletStatus = response.data;
