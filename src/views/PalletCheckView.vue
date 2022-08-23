@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title v-model="palettNumber">Paleta do sprawdzenia o numerze: {{
-                palettNumber
+        <v-card-title v-model="palletNumber">Paleta do sprawdzenia o numerze: {{
+                palletNumber
         }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" lazy-validation>
@@ -103,9 +103,7 @@
                     <v-btn color="success" class="mr-4" @click="approvePallet">
                         Zatwierdź
                     </v-btn>
-                    <!-- <v-btn @click="checkForm" class="mr-4">Sprawdź</v-btn> -->
                 </v-card-actions>
-                <p>błędy: {{ errorMessage }}</p>
             </v-form>
         </v-container>
     </v-card>
@@ -125,7 +123,7 @@ export default {
     data() {
         return {
             loading: false,
-            palettNumber: null,
+            palletNumber: null,
             errorMessage: {
                 heightComment: null,
                 heavyLightRuleComment: null,
@@ -229,7 +227,7 @@ export default {
             this.palletStatusUpdateModel.addressLabelComment = palletStatus.addressLabelComment;
             this.palletStatusUpdateModel.isWrappedWithStretch = palletStatus.isWrappedWithStretch;
             this.palletStatusUpdateModel.stretchWrapComment = palletStatus.stretchWrapComment;
-            this.palettNumber = palletStatus.number;
+            this.palletNumber = palletStatus.number;
         }
     },
     async mounted() {
