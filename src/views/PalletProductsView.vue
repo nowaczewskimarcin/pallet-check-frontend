@@ -10,11 +10,12 @@
                     <v-list-item dense>
                         <v-list-item-content>
                             <v-list-item-title>
-                                Pozycja. {{ index + 1 }} | {{ product.aaa }} Rozmiar: {{ product.size }} - ilość: {{
-                                        product.amount
-                                }}
+                                Pozycja: {{ index + 1 }} | <b>{{ product.aaa }}</b> rozmiar: {{ product.size }}
+
                             </v-list-item-title>
+
                         </v-list-item-content>
+                        <v-text-field type="number" placeholder="ilość"></v-text-field>
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
@@ -52,7 +53,6 @@ export default {
                 { aaa: "Klawiatura", size: "duże", amount: 0 }, { aaa: "Joystick", size: "małe", amount: 0 },
                 { aaa: "Mysz", size: "małe", amount: 0 }, { aaa: "Podkładka pod mysz", size: "duże", amount: 0 },
                 { aaa: "Głośniki", size: "duże", amount: 0 }, { aaa: "Kabel HDMI", size: "duże", amount: 0 },
-                { aaa: "Monitor", size: "duże", amount: 0 }, { aaa: "Mocowanie monitora", size: "duże", amount: 0 },
             ]
         }
     },
