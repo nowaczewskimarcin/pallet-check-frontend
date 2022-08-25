@@ -127,11 +127,11 @@ export default {
             loading: false,
             palettNumber: null,
             errorMessage: {
-                heightComment: null,
-                heavyLightRuleComment: null,
-                stabilityComment: null,
-                addressLabelComment: null,
-                stretchWrapComment: null,
+                height: null,
+                heavyLightRule: null,
+                stability: null,
+                addressLabel: null,
+                stretchWrap: null,
             },
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
