@@ -60,7 +60,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.isStable" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.stabilityComment">
                         </v-text-field>
                     </v-col>
@@ -76,7 +76,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.hasAddressLabel" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.addressLabelComment">
                         </v-text-field>
                     </v-col>
