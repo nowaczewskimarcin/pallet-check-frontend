@@ -60,7 +60,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.isStable" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.stability" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.stabilityComment">
                         </v-text-field>
                     </v-col>
@@ -76,7 +76,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.hasAddressLabel" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.addressLabel" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.addressLabelComment">
                         </v-text-field>
                     </v-col>
@@ -104,7 +104,6 @@
                         Zatwierdź
                     </v-btn>
                 </v-card-actions>
-                <p>błędy: {{ errorMessage }}</p>
             </v-form>
         </v-container>
     </v-card>
