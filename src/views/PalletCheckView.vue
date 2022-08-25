@@ -28,7 +28,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heightComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.height" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.heightComment">
                         </v-text-field>
                     </v-col>
@@ -44,7 +44,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.heavyLightRuleComment">
                         </v-text-field>
                     </v-col>
@@ -60,7 +60,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.stabilityComment">
                         </v-text-field>
                     </v-col>
@@ -76,7 +76,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.addressLabelComment">
                         </v-text-field>
                     </v-col>
@@ -92,7 +92,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.stretchWrap" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.stretchWrapComment">
                         </v-text-field>
                     </v-col>
@@ -156,14 +156,12 @@ export default {
                 await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel)
             }
             catch (err) {
-                const error = err.response.data.errorMessage;
-                console.log(err.response.data.errorMessage)
                 const validationErrors = err.response.data.validationErrors;
-                this.errorMessage.heightComment = validationErrors.heightComment;
-                this.errorMessage.heavyLightRuleComment = validationErrors.heavyLightRuleComment;
-                this.errorMessage.stabilityComment = validationErrors.stabilityComment;
-                this.errorMessage.addressLabelComment = validationErrors.addressLabelComment;
-                this.errorMessage.stretchWrapComment = validationErrors.stretchWrapComment;
+                this.errorMessage.height = validationErrors.heightComment;
+                this.errorMessage.heavyLightRule = validationErrors.heavyLightRuleComment;
+                this.errorMessage.stability = validationErrors.stabilityComment;
+                this.errorMessage.addressLabel = validationErrors.addressLabelComment;
+                this.errorMessage.stretchWrap = validationErrors.stretchWrapComment;
             }
             finally {
                 this.loading = false;
