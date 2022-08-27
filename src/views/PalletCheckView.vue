@@ -155,8 +155,11 @@ export default {
                 await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel)
             }
             catch (err) {
-                const validationErrors = err.response.data.validationErrors;
-                this.setErrors(validationErrors);
+                if (err.response.status == 406) {
+                    const validationErrors = err.response.data.validationErrors;
+                    this.setErrors(validationErrors);
+                    console.log('Błąd 406, nie wprowadzono potrzebnych informacji.')
+                }
             }
             finally {
                 this.loading = false;
