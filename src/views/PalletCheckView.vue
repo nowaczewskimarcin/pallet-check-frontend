@@ -156,15 +156,18 @@ export default {
             }
             catch (err) {
                 const validationErrors = err.response.data.validationErrors;
-                this.errorMessage.height = validationErrors.heightComment;
-                this.errorMessage.heavyLightRule = validationErrors.heavyLightRuleComment;
-                this.errorMessage.stability = validationErrors.stabilityComment;
-                this.errorMessage.addressLabel = validationErrors.addressLabelComment;
-                this.errorMessage.stretchWrap = validationErrors.stretchWrapComment;
+                this.setErrors(validationErrors);
             }
             finally {
                 this.loading = false;
             }
+        },
+        setErrors(validationErrors) {
+            this.errorMessage.height = validationErrors.heightComment;
+            this.errorMessage.heavyLightRule = validationErrors.heavyLightRuleComment;
+            this.errorMessage.stability = validationErrors.stabilityComment;
+            this.errorMessage.addressLabel = validationErrors.addressLabelComment;
+            this.errorMessage.stretchWrap = validationErrors.stretchWrapComment;
         },
         async fetchPalletStatus() {
             this.loading = true;
