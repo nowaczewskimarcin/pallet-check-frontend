@@ -28,7 +28,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.heightComment">
+                        <v-text-field :error-messages="errorMessage.height" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.heightComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -43,7 +44,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.heavyLightRuleComment">
+                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.heavyLightRuleComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -58,7 +60,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.stabilityComment">
+                        <v-text-field :error-messages="errorMessage.stability" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.stabilityComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -73,7 +76,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.addressLabelComment">
+                        <v-text-field :error-messages="errorMessage.addressLabel" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.addressLabelComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -88,7 +92,8 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field class="ma-0 pa-0" v-model="palletStatusUpdateModel.stretchWrapComment">
+                        <v-text-field :error-messages="errorMessage.stretchWrap" class="ma-0 pa-0"
+                            v-model="palletStatusUpdateModel.stretchWrapComment">
                         </v-text-field>
                     </v-col>
                 </v-row>
@@ -99,7 +104,6 @@
                         Zatwierdź
                     </v-btn>
                 </v-card-actions>
-
             </v-form>
         </v-container>
     </v-card>
@@ -120,6 +124,13 @@ export default {
         return {
             loading: false,
             palettNumber: null,
+            errorMessage: {
+                height: null,
+                heavyLightRule: null,
+                stability: null,
+                addressLabel: null,
+                stretchWrap: null,
+            },
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
                 heightComment: null,
@@ -141,16 +152,28 @@ export default {
         async approvePallet() {
             this.loading = true;
             try {
-                await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel);
-            } finally {
+                await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel)
+            }
+            catch (err) {
+                if (err.response.status == 406) {
+                    const validationErrors = err.response.data.validationErrors;
+                    this.setErrors(validationErrors);
+                    console.log('Błąd 406, nie wprowadzono potrzebnych informacji.')
+                }
+            }
+            finally {
                 this.loading = false;
             }
         },
+        setErrors(validationErrors) {
+            this.errorMessage.height = validationErrors.heightComment;
+            this.errorMessage.heavyLightRule = validationErrors.heavyLightRuleComment;
+            this.errorMessage.stability = validationErrors.stabilityComment;
+            this.errorMessage.addressLabel = validationErrors.addressLabelComment;
+            this.errorMessage.stretchWrap = validationErrors.stretchWrapComment;
+        },
         async fetchPalletStatus() {
             this.loading = true;
-            // if (response.status == 404) {
-            //     console.log('Aktualna paleta nie była zapisana')
-            // }
             try {
                 await this.fetchPalletFromServer();
             } finally {
@@ -161,7 +184,6 @@ export default {
             const response = await axios.get('/api/PalletsStatuses/' + this.palletId);
             const palletStatus = response.data;
             this.setFetchValue(palletStatus);
-            // console.log(palletStatus.number) zostawiam tą linijke póki co bo mi sie przyda do wglądu ten consollog
         },
         setFetchValue(palletStatus) {
             this.palletStatusUpdateModel.isCorrectHeight = palletStatus.isCorrectHeight;
@@ -182,6 +204,5 @@ export default {
     }
 }
 </script>
-
 <style scoped>
 </style>
