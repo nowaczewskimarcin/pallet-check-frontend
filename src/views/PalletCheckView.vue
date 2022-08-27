@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-auto" max-width="1000" :loading="loading">
-        <v-card-title v-model="palletNumber">Paleta do sprawdzenia o numerze: {{
-                palletNumber
+        <v-card-title v-model="palettNumber">Paleta do sprawdzenia o numerze: {{
+                palettNumber
         }}</v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
             <v-form ref="form" lazy-validation>
@@ -28,7 +28,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heightComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.height" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.heightComment">
                         </v-text-field>
                     </v-col>
@@ -44,7 +44,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.heavyLightRule" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.heavyLightRuleComment">
                         </v-text-field>
                     </v-col>
@@ -60,7 +60,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.stability" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.stabilityComment">
                         </v-text-field>
                     </v-col>
@@ -76,7 +76,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.addressLabel" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.addressLabelComment">
                         </v-text-field>
                     </v-col>
@@ -92,7 +92,7 @@
                         </v-radio-group>
                     </v-col>
                     <v-col>
-                        <v-text-field :error-messages="errorMessage.heavyLightRuleComment" class="ma-0 pa-0"
+                        <v-text-field :error-messages="errorMessage.stretchWrap" class="ma-0 pa-0"
                             v-model="palletStatusUpdateModel.stretchWrapComment">
                         </v-text-field>
                     </v-col>
@@ -123,13 +123,13 @@ export default {
     data() {
         return {
             loading: false,
-            palletNumber: null,
+            palettNumber: null,
             errorMessage: {
-                heightComment: null,
-                heavyLightRuleComment: null,
-                stabilityComment: null,
-                addressLabelComment: null,
-                stretchWrapComment: null,
+                height: null,
+                heavyLightRule: null,
+                stability: null,
+                addressLabel: null,
+                stretchWrap: null,
             },
             palletStatusUpdateModel: {
                 isCorrectHeight: null,
@@ -153,35 +153,24 @@ export default {
             this.loading = true;
             try {
                 await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel)
-                // .catch(function (error) {
-                // if (error.response) {
-                //     console.log('Status odpowiedzi z serwera: ' + error.response.status + ' - błąd: ' + error.response.data.validationErrors.addressLabelComment);
-                //     console.log(error.response.data.validationErrors.addressLabelComment)
-                //     this.errorMessage.push(error.response.data.validationErrors.addressLabelComment);
-                // }
-                //     console.log(error)
-                //     console.log(error.response.data.errorMessage)
-                //     console.log(error.response.data.validationErrors)
-                //     if (error.response.data.validationErrors.addressLabelComment) {
-
-                //     }
-                //     console.log(error.response.data.validationErrors.addressLabelComment, error.response.data.validationErrors.stabilityComment,
-                //         error.response.data.validationErrors.heavyLightRuleComment, error.response.data.validationErrors.heightComment,
-                //         error.response.data.validationErrors.stretchWrapComment)
-                // });
-
             }
             catch (err) {
-                const validationErrors = err.response.data.validationErrors;
-                this.errorMessage.heightComment = validationErrors.heightComment;
-                this.errorMessage.heavyLightRuleComment = validationErrors.heavyLightRuleComment;
-                this.errorMessage.stabilityComment = validationErrors.stabilityComment;
-                this.errorMessage.addressLabelComment = validationErrors.addressLabelComment;
-                this.errorMessage.stretchWrapComment = validationErrors.stretchWrapComment;
+                if (err.response.status == 406) {
+                    const validationErrors = err.response.data.validationErrors;
+                    this.setErrors(validationErrors);
+                    console.log('Błąd 406, nie wprowadzono potrzebnych informacji.')
+                }
             }
             finally {
                 this.loading = false;
             }
+        },
+        setErrors(validationErrors) {
+            this.errorMessage.height = validationErrors.heightComment;
+            this.errorMessage.heavyLightRule = validationErrors.heavyLightRuleComment;
+            this.errorMessage.stability = validationErrors.stabilityComment;
+            this.errorMessage.addressLabel = validationErrors.addressLabelComment;
+            this.errorMessage.stretchWrap = validationErrors.stretchWrapComment;
         },
         async fetchPalletStatus() {
             this.loading = true;
@@ -191,30 +180,10 @@ export default {
                 this.loading = false;
             }
         },
-        // checkForm(palletStatus) {
-
-        //     const dupa = palletStatus.validationErrors;
-        //     console.log(dupa)
-
-        // if (validationErrors = true) {
-        //     console.log('Wystąpił błąd')
-        // }
-        // if (this.palletStatus.status == 404) {
-        //     console.log('Aktualna paleta nie była zapisana')
-        // };
-        // if (this.palletStatus.status == 406) {
-        //     console.log('Odpowiedź z serwera: błąd 406: Not acceptable')
-        // };
-        // if (response.status == 400) {
-        //     const json = await response.json();
-        //     this.errorMessage = json.errorMessage;
-        // }
-        // },
         async fetchPalletFromServer() {
             const response = await axios.get('/api/PalletsStatuses/' + this.palletId);
             const palletStatus = response.data;
             this.setFetchValue(palletStatus);
-            // console.log(palletStatus.number) zostawiam tą linijke póki co bo mi sie przyda do wglądu ten consollog
         },
         setFetchValue(palletStatus) {
             this.palletStatusUpdateModel.isCorrectHeight = palletStatus.isCorrectHeight;
@@ -227,7 +196,7 @@ export default {
             this.palletStatusUpdateModel.addressLabelComment = palletStatus.addressLabelComment;
             this.palletStatusUpdateModel.isWrappedWithStretch = palletStatus.isWrappedWithStretch;
             this.palletStatusUpdateModel.stretchWrapComment = palletStatus.stretchWrapComment;
-            this.palletNumber = palletStatus.number;
+            this.palettNumber = palletStatus.number;
         }
     },
     async mounted() {
@@ -235,6 +204,5 @@ export default {
     }
 }
 </script>
-
 <style scoped>
 </style>
