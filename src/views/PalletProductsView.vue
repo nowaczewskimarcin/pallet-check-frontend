@@ -19,10 +19,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(product, index) in products" :key="product.index">
-                            <td> {{ index + 1 }}</td>
+                        <tr v-for="product in products" :key="product.id">
+                            <td> {{ product.id }}</td>
                             <td>{{ product.name }}</td>
-                            <td> {{ product.amount }}</td>
+                            <td> {{ product.id }}</td>
                         </tr>
                     </tbody>
                 </template>
@@ -41,10 +41,9 @@ export default {
     data() {
         return {
             products: [
-                { name: "Słuchawki", size: "małe", amount: 0 }, { name: "Kierownica", size: "duże", amount: 0 },
-                { name: "Klawiatura", size: "duże", amount: 0 }, { name: "Joystick", size: "małe", amount: 0 },
-                { name: "Mysz", size: "małe", amount: 0 }, { name: "Podkładka pod mysz", size: "duże", amount: 0 },
-                { name: "Głośniki", size: "duże", amount: 0 }, { name: "Kabel HDMI", size: "duże", amount: 0 },
+                { id: 1, name: "Słuchawki" }, { id: 2, name: "Klawiatura" },
+                { id: 3, name: "Mysz" }, { id: 4, name: "Głośniki" },
+
             ],
 
         }
