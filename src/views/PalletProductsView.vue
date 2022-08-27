@@ -1,8 +1,6 @@
 <template>
 
     <v-card class="mx-auto" max-width="1000">
-        <v-card-title :palletNumber="palletNumber">Produkty na palecie o numerze: {{ palletNumber }}
-        </v-card-title>
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
 
             <v-simple-table>
@@ -39,10 +37,6 @@
 export default {
     name: 'PalletProductsView',
     props: {
-        palletNumber: {
-            required: true,
-            type: String,
-        }
     },
     data() {
         return {
