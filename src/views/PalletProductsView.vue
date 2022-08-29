@@ -52,6 +52,7 @@ export default {
         async fetchProducts() {
             const response = await axios.get('/api/pallets/' + this.palletId + '/products');
             this.products = response.data;
+            this.products.sort((a, b) => a.id - b.id);
             console.log(this.products);
         },
     },
