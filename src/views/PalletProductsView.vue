@@ -8,13 +8,12 @@
                     <thead>
                         <tr>
                             <th class="text-left">
-                                Pozycja
+                                Numer
                             </th>
                             <th class="text-left">
                                 Nazwa produktu
                             </th>
                             <th class="text-left">
-                                Ilość
                             </th>
                         </tr>
                     </thead>
@@ -22,7 +21,7 @@
                         <tr v-for="product in products" :key="product.id">
                             <td> {{ product.id }}</td>
                             <td>{{ product.name }}</td>
-                            <td> {{ product.id }}</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </template>
@@ -34,25 +33,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'PalletProductsView',
     props: {
+        palletId: {
+            required: true,
+            type: String,
+        },
     },
     data() {
         return {
-            products: [
-                { id: 1, name: "Słuchawki" }, { id: 2, name: "Klawiatura" },
-                { id: 3, name: "Mysz" }, { id: 4, name: "Głośniki" },
-
-            ],
+            products: [],
 
         }
     },
     methods: {
+        async fetchProducts() {
+            const response = await axios.get('/api/pallets/' + this.palletId + '/products');
+            this.products = response.data;
+            console.log(this.products);
+        },
     },
     computed: {
     },
-    mounted() {
+    async mounted() {
+        await this.fetchProducts();
     },
 }
 </script>
