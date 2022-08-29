@@ -19,8 +19,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="product in products" :key="product.id">
-                            <td> {{ product.id }}</td>
+                        <tr v-for="(product, index) in products" :key="product.id">
+                            <td> {{ index + 1 }}</td>
                             <td>{{ product.name }}</td>
                             <td><input v-model="product.actualQuantity" required placeholder="Wpisz ilość produktu" />
                             </td>
@@ -53,6 +53,7 @@ export default {
     },
     data() {
         return {
+            n: 0,
             products: [{ id: 1, name: '', declaredQuantity: 0, actualQuantity: 0 },
             { id: 2, name: '', declaredQuantity: 0, actualQuantity: 0 }
             ],
