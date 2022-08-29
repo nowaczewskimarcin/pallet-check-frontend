@@ -14,6 +14,7 @@
                                 Nazwa produktu
                             </th>
                             <th class="text-left">
+                                Ilość
                             </th>
                         </tr>
                     </thead>
@@ -21,12 +22,19 @@
                         <tr v-for="product in products" :key="product.id">
                             <td> {{ product.id }}</td>
                             <td>{{ product.name }}</td>
-                            <td></td>
+                            <td><input required placeholder="Wpisz ilość produktu" /></td>
                         </tr>
                     </tbody>
                 </template>
 
             </v-simple-table>
+            <v-divider></v-divider>
+            <v-card-actions class="text-center">
+                <v-btn>Anuluj</v-btn>
+                <v-btn color="success" class="mr-4">
+                    Zatwierdź
+                </v-btn>
+            </v-card-actions>
         </v-container>
     </v-card>
 
@@ -44,14 +52,16 @@ export default {
     },
     data() {
         return {
-            products: [],
+            products: [{ id: 1, name: '', declaredQuantity: 0, actualQuantity: 0 },
+            { id: 2, name: '', declaredQuantity: 0, actualQuantity: 0 }
+            ],
 
         }
     },
     methods: {
         async fetchProducts() {
             const response = await axios.get('/api/pallets/' + this.palletId + '/products');
-            this.products = response.data;
+            this.products = response.data.map(x => { return { ...x, declaredQuantity: 0, actualQuantity: 0 } });
             this.products.sort((a, b) => a.id - b.id);
             console.log(this.products);
         },
