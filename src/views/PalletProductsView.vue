@@ -36,7 +36,25 @@
                     Wyślij do sprawdzenia
                 </v-btn>
             </v-card-actions>
+            <div class="text-center">
+                <v-snackbar centered v-model="snackbar" color="red">
+                    Wprowadzone wartości są niezgodne z deklarowanymi, proszę o ponowne <strong>sprawdzenie ilości
+                        produktów</strong>
+
+                    <template v-slot:action="{ attrs }">
+                        <v-btn color="white" text v-bind="attrs" @click="goToConfirm">
+                            Sprawdź ponownie
+                        </v-btn>
+                    </template>
+                </v-snackbar>
+            </div>
         </v-container>
+        <!-- <div>
+            <v-alert dense type="info">
+                Wprowadzone wartości są niezgodne z deklarowanymi, proszę o ponowne <strong>sprawdzenie</strong>
+                <v-btn color="success" class="mr-4">Sprawdź ponownie</v-btn>
+            </v-alert>
+        </div> -->
     </v-card>
 
 </template>
@@ -54,6 +72,7 @@ export default {
     data() {
         return {
             products: [{ id: null, name: '', actualQuantity: 0 }],
+            snackbar: false,
         }
     },
     methods: {
@@ -63,6 +82,10 @@ export default {
             this.products.sort((a, b) => a.id - b.id);
             console.log(this.products);
         },
+        goToConfirm() {
+            this.snackbar = false;
+            this.$router.push('/conflict/' + this.palletId);
+        },
         async sendToBackend() {
             try {
                 await axios.post('/api/pallets/' + this.palletId + '/products', this.products);
@@ -70,7 +93,8 @@ export default {
             catch (err) {
                 if (err.response.status == 409) {
                     console.log('Błąd 409, wpisne wartości różnią się od deklarowanych.')
-                    this.$router.push('/conflict/' + this.palletId);
+                    this.snackbar = true;
+
                 }
             }
             finally {

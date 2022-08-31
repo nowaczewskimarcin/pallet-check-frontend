@@ -37,7 +37,7 @@
             </v-simple-table>
             <v-divider></v-divider>
             <v-card-actions class="text-center">
-                <v-btn>Anuluj</v-btn>
+                <v-btn @click="backToPrevous">Anuluj</v-btn>
                 <v-btn color="success" class="mr-4" @click="sendToBackend">
                     Wyślij do sprawdzenia
                 </v-btn>
@@ -80,6 +80,9 @@ export default {
             }
             finally {
             }
+        },
+        backToPrevous() {
+            this.$router.push('/palletcheck/palletproductsview/' + this.palletId);
         },
     },
     async mounted() {
