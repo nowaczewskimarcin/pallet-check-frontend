@@ -14,15 +14,21 @@
                                 Nazwa produktu
                             </th>
                             <th class="text-left">
-                                Ilość
+                                Wpisz poprawną ilość produktu
+                            </th>
+                            <th class="text-left">
+                                Deklarowana ilość
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(product, index) in products" :key="product.id">
+                        <tr v-for="(product, index) in productsFromServer" :key="product.id">
                             <td> {{ index + 1 }}</td>
                             <td>{{ product.name }}</td>
-                            <td><input v-model="product.actualQuantity" required placeholder="Wpisz ilość produktu" />
+                            <td><input v-model="productsFromServer[index].actualQuantity" required
+                                    placeholder="Wpisz ilość produktu" />
+                            </td>
+                            <td>{{ product.declaredQuantity }}
                             </td>
                         </tr>
                     </tbody>
@@ -44,7 +50,7 @@
 <script>
 import axios from 'axios';
 export default {
-    name: 'PalletProductsView',
+    name: 'ConflictView',
     props: {
         palletId: {
             required: true,
@@ -53,33 +59,31 @@ export default {
     },
     data() {
         return {
-            products: [{ id: null, name: '', actualQuantity: 0 }],
+            productsFromServer: [],
         }
     },
     methods: {
-        async fetchProducts() {
-            const response = await axios.get('/api/pallets/' + this.palletId + '/products');
-            this.products = response.data;
-            this.products.sort((a, b) => a.id - b.id);
-            console.log(this.products);
+        async fetchProductsFromServer() {
+            const responseFromServer = await axios.get('/api/pallets/' + this.palletId + '/products/confirm');
+            this.productsFromServer = responseFromServer.data;
+            this.productsFromServer.sort((a, b) => a.id - b.id);
+            console.log(this.productsFromServer);
         },
         async sendToBackend() {
             try {
-                await axios.post('/api/pallets/' + this.palletId + '/products', this.products);
+                await axios.post('/api/pallets/' + this.palletId + '/products/confirm', this.productsFromServer);
             }
             catch (err) {
                 if (err.response.status == 409) {
                     console.log('Błąd 409, wpisne wartości różnią się od deklarowanych.')
-                    this.$router.push('/conflict/' + this.palletId);
                 }
             }
             finally {
             }
         },
-
     },
     async mounted() {
-        await this.fetchProducts();
+        await this.fetchProductsFromServer();
     },
 }
 </script>
