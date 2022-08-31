@@ -49,12 +49,6 @@
                 </v-snackbar>
             </div>
         </v-container>
-        <!-- <div>
-            <v-alert dense type="info">
-                Wprowadzone wartości są niezgodne z deklarowanymi, proszę o ponowne <strong>sprawdzenie</strong>
-                <v-btn color="success" class="mr-4">Sprawdź ponownie</v-btn>
-            </v-alert>
-        </div> -->
     </v-card>
 
 </template>
