@@ -14,7 +14,7 @@
                                 Nazwa produktu
                             </th>
                             <th class="text-left">
-                                Wpisz poprawną ilość produktu
+                                Wpisz ilość produktu
                             </th>
                             <th class="text-left">
                                 Ilość z poprzedniego formularza
