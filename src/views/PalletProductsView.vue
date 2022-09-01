@@ -22,7 +22,9 @@
                         <tr v-for="(product, index) in products" :key="product.id">
                             <td> {{ index + 1 }}</td>
                             <td>{{ product.name }}</td>
-                            <td><input v-model="product.actualQuantity" required placeholder="Wpisz ilość produktu" />
+                            <td>
+                                <v-text-field v-model="product.actualQuantity" required
+                                    placeholder="Wpisz ilość produktu"></v-text-field>
                             </td>
                         </tr>
                     </tbody>
