@@ -35,7 +35,7 @@
             <v-card-actions class="text-center">
                 <v-btn>Anuluj</v-btn>
                 <v-btn color="success" class="mr-4" @click="sendToBackend">
-                    Wyślij do sprawdzenia
+                    Zapisz
                 </v-btn>
             </v-card-actions>
             <div class="text-center">
