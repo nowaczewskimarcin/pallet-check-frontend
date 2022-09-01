@@ -72,7 +72,6 @@ export default {
                 this.errorMessage = json.errorMessage;
             }
         },
-
         onSnackbarInput(onSnackbarValue) {
             if (onSnackbarValue == false) {
                 this.errorMessage = null;

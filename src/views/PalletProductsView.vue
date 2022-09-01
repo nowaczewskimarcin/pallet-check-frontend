@@ -33,7 +33,7 @@
             </v-simple-table>
             <v-divider></v-divider>
             <v-card-actions class="text-center">
-                <v-btn>Anuluj</v-btn>
+                <v-btn @click="backToPrevious">Anuluj</v-btn>
                 <v-btn color="success" class="mr-4" @click="sendToBackend">
                     Zapisz
                 </v-btn>
@@ -90,13 +90,14 @@ export default {
                 if (err.response.status == 409) {
                     console.log('Błąd 409, wpisne wartości różnią się od deklarowanych.')
                     this.snackbar = true;
-
                 }
             }
             finally {
             }
         },
-
+        backToPrevious() {
+            this.$router.push({ name: 'palletsSelect' })
+        },
     },
     async mounted() {
         await this.fetchProducts();

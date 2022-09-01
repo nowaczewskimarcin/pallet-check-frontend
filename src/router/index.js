@@ -8,15 +8,10 @@ import ConflictView from '../views/ConflictView.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'palletsSelect',
-    component: PalletsSelectView
-  },
+  { path: '/', name: 'palletsSelect', component: PalletsSelectView },
   { path: '/palletcheck/:palletId', props: true, name: 'palletCheck', component: PalletCheckView },
   { path: '/palletcheck/palletproductsview/:palletId', props: true, name: 'palletProductsView', component: PalletProductsView },
   { path: '/conflict/:palletId', props: true, name: 'ConflictView', component: ConflictView },
-
 ]
 
 const router = new VueRouter({

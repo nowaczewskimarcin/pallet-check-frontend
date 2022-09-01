@@ -40,7 +40,7 @@
             <v-card-actions class="text-center">
                 <v-btn @click="backToPrevous">Anuluj</v-btn>
                 <v-btn color="success" class="mr-4" @click="sendToBackend">
-                    Wyślij do sprawdzenia
+                    Zapisz
                 </v-btn>
             </v-card-actions>
         </v-container>
@@ -83,7 +83,7 @@ export default {
             }
         },
         backToPrevous() {
-            this.$router.push('/palletcheck/palletproductsview/' + this.palletId);
+            this.$router.push({ name: 'palletProductsView', params: { palletId: this.palletId } })
         },
     },
     async mounted() {
