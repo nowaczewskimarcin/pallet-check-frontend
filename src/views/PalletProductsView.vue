@@ -80,7 +80,7 @@ export default {
         },
         goToConfirm() {
             this.snackbar = false;
-            this.$router.push('/conflict/' + this.palletId);
+            this.$router.push({ name: 'ConflictView', params: { palletId: this.palletId } })
         },
         async sendToBackend() {
             try {
