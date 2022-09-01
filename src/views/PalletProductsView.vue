@@ -23,7 +23,8 @@
                             <td> {{ index + 1 }}</td>
                             <td>{{ product.name }}</td>
                             <td>
-                                <v-text-field v-model="product.quantity" required placeholder="Wpisz ilość produktu">
+                                <v-text-field v-model="product.quantity" type="number" required
+                                    placeholder="Wpisz ilość produktu">
                                 </v-text-field>
                             </td>
                         </tr>
