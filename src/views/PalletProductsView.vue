@@ -75,12 +75,6 @@ export default {
         async fetchProducts() {
             const response = await axios.get('/api/pallets/' + this.palletId + '/products');
             this.products = response.data;
-            console.log(response.data[0].id, response.data[0].name)
-            // this.products.id = 
-            const getId = response.data.map((item) => {
-                return item.id
-            });
-            console.log(getId)
             this.products.sort((a, b) => a.id - b.id);
             console.log(this.products);
         },
@@ -90,14 +84,10 @@ export default {
         },
         async sendToBackend() {
             try {
-                // await axios.post('/api/pallets/' + this.palletId + '/products', this.products);
-                // await axios.post("dupa", this.product.map(x => new {id: x.id, kłantiti: x.jakiesPole}
-                // await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => new { id: x.products.id, quantity: x.products.quantity }));
-
-                await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => new { id: x.id, quantity: x.quantity }));
+                await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => ({ id: x.id, quantity: x.quantity })));
             }
             catch (err) {
-                if (err.response == 409) {
+                if (err.response.status == 409) {
                     console.log('Błąd 409, wpisne wartości różnią się od deklarowanych.')
                     this.snackbar = true;
                 }
