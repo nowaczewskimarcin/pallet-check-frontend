@@ -14,7 +14,10 @@
                                 Nazwa produktu
                             </th>
                             <th class="text-left">
-                                Wpisz ilość towaru
+                                Wpisz poprawną ilość produktu
+                            </th>
+                            <th class="text-left">
+                                Ilość z poprzedniego formularza
                             </th>
                             <th class="text-left">
                                 Deklarowana ilość
@@ -26,8 +29,11 @@
                             <td> {{ index + 1 }}</td>
                             <td>{{ product.name }}</td>
                             <td>
-                                <v-text-field v-model="productsFromServer[index].actualQuantity" required
+                                <v-text-field v-model="productsFromServer[index].actualQuantity" required type="number"
                                     placeholder="Wpisz ilość produktu"></v-text-field>
+                            </td>
+                            <td>
+                                {{ product.actualQuantity }}
                             </td>
                             <td>{{ product.declaredQuantity }}
                             </td>
@@ -72,10 +78,11 @@ export default {
         },
         async sendToBackend() {
             try {
-                await axios.post('/api/pallets/' + this.palletId + '/products/confirm', this.productsFromServer);
+                await axios.post('/api/pallets/' + this.palletId + '/products/confirm', this.products.map(x => ({ id: x.id, quantity: x.quantity })));
+                console.log(this.productsFromServer)
             }
             catch (err) {
-                if (err.response.status == 409) {
+                if (err.response == 409) {
                     console.log('Błąd 409, wpisne wartości różnią się od deklarowanych.')
                 }
             }
