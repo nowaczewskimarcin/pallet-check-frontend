@@ -29,7 +29,7 @@
                             <td> {{ index + 1 }}</td>
                             <td>{{ product.name }}</td>
                             <td>
-                                <v-text-field v-model="productsFromServer[index].actualQuantity" required type="number"
+                                <v-text-field v-model="productsFromServer[index].quantity" required type="number"
                                     placeholder="Wpisz ilość produktu"></v-text-field>
                             </td>
                             <td>
