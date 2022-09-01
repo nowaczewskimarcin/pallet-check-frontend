@@ -78,7 +78,8 @@ export default {
         },
         async sendToBackend() {
             try {
-                await axios.post('/api/pallets/' + this.palletId + '/products/confirm', this.products.map(x => ({ id: x.id, quantity: x.quantity })));
+                await axios.post('/api/pallets/' + this.palletId + '/products/confirm', this.productsFromServer.map(x => ({ id: x.id, quantity: x.quantity })));
+
                 console.log(this.productsFromServer)
             }
             catch (err) {
