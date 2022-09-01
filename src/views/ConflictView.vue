@@ -14,7 +14,7 @@
                                 Nazwa produktu
                             </th>
                             <th class="text-left">
-                                Wpisz poprawną ilość produktu
+                                Wpisz ilość towaru
                             </th>
                             <th class="text-left">
                                 Deklarowana ilość
