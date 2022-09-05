@@ -79,12 +79,14 @@ export default {
         async sendToBackend() {
             try {
                 await axios.post('/api/pallets/' + this.palletId + '/products/confirm', this.productsFromServer.map(x => ({ id: x.id, quantity: x.quantity })));
-
                 console.log(this.productsFromServer)
             }
             catch (err) {
-                if (err.response == 409) {
-                    console.log('Błąd 409, wpisne wartości różnią się od deklarowanych.')
+                if (err.response == 400) {
+                    console.log('Błąd 400 - Bad Request')
+                }
+                if (err.response == 404) {
+                    console.log('Błąd 404')
                 }
             }
             finally {
