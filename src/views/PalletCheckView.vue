@@ -147,12 +147,13 @@ export default {
     },
     methods: {
         returnToMenu() {
-            this.$router.push('/');
+            this.$router.push({ name: 'palletsSelect' })
         },
         async approvePallet() {
             this.loading = true;
             try {
                 await axios.post('/api/PalletsStatuses/' + this.palletId, this.palletStatusUpdateModel)
+                this.$router.push({ name: 'palletProductsView', params: { palletId: this.palletId } })
             }
             catch (err) {
                 if (err.response.status == 406) {
