@@ -159,7 +159,6 @@ export default {
                 if (err.response.status == 406) {
                     const validationErrors = err.response.data.validationErrors;
                     this.setErrors(validationErrors);
-                    console.log('Błąd 406, nie wprowadzono potrzebnych informacji.')
                 }
             }
             finally {
