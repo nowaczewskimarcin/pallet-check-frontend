@@ -43,6 +43,7 @@
 
 </template>
 <script>
+import axios from 'axios';
 export default {
     name: 'PalletsSelectView',
     data() {
@@ -55,21 +56,34 @@ export default {
     },
     methods: {
         async fetchDailyPallets() {
-            const response = await fetch('api/dailyPallets');
-            const json = await response.json();
-            this.pallets = json;
+            try {
+                const response = await axios.get('api/dailyPallets');
+                this.pallets = response.data;
+            }
+            catch (err) {
+                if (err.response.status !== null) {
+                    this.errorMessage = err.response.data.errorMessage;
+                }
+            }
+            finally {
+                this.loading = false;
+            }
         },
         goToPalletCheck() {
             const selectedPalletId = this.pallets[this.selectedPallet].id;
             this.$router.push({ name: 'palletCheck', params: { palletId: selectedPalletId } })
         },
         async generateNewPallets() {
-            const response = await fetch('api/dailyPallets', {
-                method: 'POST'
-            });
-            if (response.status == 400) {
-                const json = await response.json();
-                this.errorMessage = json.errorMessage;
+            try {
+                await axios.post('api/dailyPallets');
+            }
+            catch (err) {
+                if (err.response.status == 400) {
+                    this.errorMessage = err.response.data.errorMessage;
+                }
+            }
+            finally {
+                this.loading = false;
             }
         },
         onSnackbarInput(onSnackbarValue) {
