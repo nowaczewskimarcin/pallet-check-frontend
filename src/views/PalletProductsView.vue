@@ -1,6 +1,6 @@
 <template>
 
-    <v-card class="mx-auto" max-width="1000">
+    <v-card class="mx-auto" max-width="1000" :loading="loading">
         <v-container class="mb-3 pa-md-5 mx-lg-auto">
 
             <v-responsive class="overflow-y-auto" max-height="calc(90vh - 150px)">
@@ -72,13 +72,16 @@ export default {
         return {
             products: [{ id: null, quantity: 0 }],
             snackbar: false,
+            loading: false,
         }
     },
     methods: {
         async fetchProducts() {
+            this.loading = true;
             const response = await axios.get('/api/pallets/' + this.palletId + '/products');
             this.products = response.data;
             this.products.sort((a, b) => a.id - b.id);
+            this.loading = false;
         },
         goToConfirm() {
             this.snackbar = false;
@@ -86,6 +89,7 @@ export default {
         },
         async sendToBackend() {
             try {
+                this.loading = true;
                 await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => ({ id: x.id, quantity: x.quantity })));
             }
             catch (err) {
@@ -94,6 +98,7 @@ export default {
                 }
             }
             finally {
+                this.loading = false;
             }
         },
         backToPrevious() {
