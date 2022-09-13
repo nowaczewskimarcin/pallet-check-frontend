@@ -35,10 +35,16 @@
             </v-responsive>
 
             <v-divider></v-divider>
-            <v-card-actions class="text-center">
+            <v-card-actions class="text-center d-flex">
                 <v-btn @click="backToPrevious">Anuluj</v-btn>
                 <v-btn color="success" class="mr-4" @click="sendToBackend">
                     Zapisz
+                </v-btn>
+                <v-btn class="mr-4 ml-auto" @click="addProduct()">
+                    <v-icon left>
+                        mdi-file-plus
+                    </v-icon>
+                    Dodaj produkt
                 </v-btn>
             </v-card-actions>
             <div class="text-center">
@@ -52,6 +58,37 @@
                         </v-btn>
                     </template>
                 </v-snackbar>
+
+                <v-dialog v-model="dialog" scrollable max-width="600px">
+                    <v-card>
+
+                        <v-card-title>
+                            <span class="text-h5">Dodaj produkt do palety</span>
+                        </v-card-title>
+                        <v-subheader>WYBIERZ PRODUKT</v-subheader>
+                        <v-card-text>
+                            <v-list dense>
+                                <v-list-item-group v-model="selectedItem" color="primary" multiple>
+                                    <v-list-item v-for="(item, i) in productName" :key="i" :value="item.i">
+                                        <v-list-item-content>
+                                            <v-list-item-title v-text="item.name">
+                                            </v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-list-item-group>
+                            </v-list>
+                        </v-card-text>
+                        <v-spacer></v-spacer>
+                        <v-card-actions>
+                            <v-btn color="blue darken-1" text @click="dialog = false">
+                                Anuluj
+                            </v-btn>
+                            <v-btn color="blue darken-1" text @click="addProductToList()">
+                                Dodaj
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
             </div>
         </v-container>
     </v-card>
@@ -73,6 +110,9 @@ export default {
             products: [{ id: null, quantity: 0 }],
             snackbar: false,
             loading: false,
+            dialog: false,
+            selectedItem: null,
+            productName: [],
         }
     },
     methods: {
@@ -82,6 +122,28 @@ export default {
             this.products = response.data;
             this.products.sort((a, b) => a.id - b.id);
             this.loading = false;
+        },
+        addProductToList() {
+            const selectedProducts = this.productName[this.selectedItem];
+            this.products.push({ id: null, name: selectedProducts.name })
+            console.log(this.products)
+            this.dialog = false;
+        },
+        async addProduct() {
+            try {
+                this.loading = true;
+                this.dialog = true;
+                const response = await axios.get('/api/pallets/' + this.palletId + '/products/available')
+                this.productName = response.data;
+            }
+            catch (err) {
+                if (err.response.status == 409) {
+                    this.snackbar = true;
+                }
+            }
+            finally {
+                this.loading = false;
+            }
         },
         goToConfirm() {
             this.snackbar = false;
