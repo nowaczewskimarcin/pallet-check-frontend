@@ -69,9 +69,9 @@
                         <v-card-text>
                             <v-list dense>
                                 <v-list-item-group v-model="selectedItem" color="primary" multiple>
-                                    <v-list-item v-for="(item, i) in productName" :key="i" :value="item.i">
+                                    <v-list-item v-for="product in productNames" :key="product.id">
                                         <v-list-item-content>
-                                            <v-list-item-title v-text="item.name">
+                                            <v-list-item-title v-text="product.name">
                                             </v-list-item-title>
                                         </v-list-item-content>
                                     </v-list-item>
@@ -112,7 +112,7 @@ export default {
             loading: false,
             dialog: false,
             selectedItem: null,
-            productName: [],
+            productNames: [],
         }
     },
     methods: {
@@ -124,7 +124,7 @@ export default {
             this.loading = false;
         },
         addProductToList() {
-            const selectedProducts = this.productName[this.selectedItem];
+            const selectedProducts = this.productNames[this.selectedItem];
             this.products.push({ id: null, name: selectedProducts.name })
             console.log(this.products)
             this.dialog = false;
@@ -134,7 +134,7 @@ export default {
                 this.loading = true;
                 this.dialog = true;
                 const response = await axios.get('/api/pallets/' + this.palletId + '/products/available')
-                this.productName = response.data;
+                this.productNames = response.data;
             }
             catch (err) {
                 if (err.response.status == 409) {
