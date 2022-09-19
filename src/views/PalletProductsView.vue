@@ -69,7 +69,7 @@
                         <v-card-text>
                             <v-list dense>
                                 <v-list-item-group v-model="selectedItem" color="primary">
-                                    <v-list-item v-for="product in productNames" :key="product.id">
+                                    <v-list-item v-for="product in productName" :key="product.id">
                                         <v-list-item-content>
                                             <v-list-item-title v-text="product.name">
                                             </v-list-item-title>
@@ -112,7 +112,7 @@ export default {
             loading: false,
             dialog: false,
             selectedItem: null,
-            productNames: [{ name: null }],
+            productName: [],
         }
     },
     methods: {
@@ -124,8 +124,8 @@ export default {
             this.loading = false;
         },
         addProductToList() {
-            const selectedProducts = this.productNames[this.selectedItem];
-            this.products.push({ id: null, name: selectedProducts.name });
+            const selectedProduct = this.productName[this.selectedItem];
+            this.products.push({ id: null, name: selectedProduct.name, quantity: 0 });
             console.log(this.products);
             this.dialog = false;
         },
@@ -134,7 +134,7 @@ export default {
                 this.loading = true;
                 this.dialog = true;
                 const response = await axios.get('/api/pallets/' + this.palletId + '/products/available')
-                this.productNames = response.data;
+                this.productName = response.data;
             }
             catch (err) {
                 if (err.response.status == 409) {
@@ -152,7 +152,15 @@ export default {
         async sendToBackend() {
             try {
                 this.loading = true;
-                await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => ({ id: x.id, quantity: x.quantity })));
+                await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => {
+                    if (x.id == null) {
+                        return { name: x.name, quantity: x.quantity };
+                    }
+                    else {
+                        return { id: x.id, quantity: x.quantity };
+                    }
+                }
+                ));
             }
             catch (err) {
                 if (err.response.status == 409) {
