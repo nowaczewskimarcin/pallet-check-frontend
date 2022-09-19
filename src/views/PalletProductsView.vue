@@ -68,7 +68,7 @@
                         <v-subheader>WYBIERZ PRODUKT</v-subheader>
                         <v-card-text>
                             <v-list dense>
-                                <v-list-item-group v-model="selectedItem" color="primary" multiple>
+                                <v-list-item-group v-model="selectedItem" color="primary">
                                     <v-list-item v-for="product in productNames" :key="product.id">
                                         <v-list-item-content>
                                             <v-list-item-title v-text="product.name">
@@ -112,7 +112,7 @@ export default {
             loading: false,
             dialog: false,
             selectedItem: null,
-            productNames: [],
+            productNames: [{ name: null }],
         }
     },
     methods: {
@@ -125,8 +125,8 @@ export default {
         },
         addProductToList() {
             const selectedProducts = this.productNames[this.selectedItem];
-            this.products.push({ id: null, name: selectedProducts.name })
-            console.log(this.products)
+            this.products.push({ id: null, name: selectedProducts.name });
+            console.log(this.products);
             this.dialog = false;
         },
         async addProduct() {
@@ -147,7 +147,7 @@ export default {
         },
         goToConfirm() {
             this.snackbar = false;
-            this.$router.push({ name: 'ConflictView', params: { palletId: this.palletId } })
+            this.$router.push({ name: 'ConflictView', params: { palletId: this.palletId } });
         },
         async sendToBackend() {
             try {
@@ -158,20 +158,24 @@ export default {
                 if (err.response.status == 409) {
                     this.snackbar = true;
                 }
+                if (err.response.status == 400) {
+                    alert('Błąd z serwera: ERROR 400: BAD REQUEST');
+                }
             }
             finally {
                 this.loading = false;
             }
         },
         backToPrevious() {
-            this.$router.push({ name: 'palletsSelect' })
-        },
+            this.$router.push({ name: 'palletsSelect' });
+        }
     },
     async mounted() {
         await this.fetchProducts();
-    },
+    }
 }
 </script>
 
 <style scoped>
+
 </style>
