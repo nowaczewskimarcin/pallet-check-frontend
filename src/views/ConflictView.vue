@@ -99,8 +99,6 @@ export default {
                     this.errorMessage = err.response.data.validationErrors;
                 }
             }
-            finally {
-            }
         },
         async sendToBackend() {
             try {
@@ -132,4 +130,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

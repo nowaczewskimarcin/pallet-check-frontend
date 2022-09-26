@@ -107,7 +107,7 @@ export default {
     },
     data() {
         return {
-            products: [{ id: null, quantity: 0 }],
+            products: [{ id: null, quantity: 0, name: "" }],
             snackbar: false,
             loading: false,
             dialog: false,
@@ -125,7 +125,7 @@ export default {
         },
         addProductToList() {
             const selectedProduct = this.productName[this.selectedItem];
-            this.products.push({ id: null, name: selectedProduct.name, quantity: 0 });
+            this.products.push({ id: null, name: selectedProduct.name, quantity: null });
             console.log(this.products);
             this.dialog = false;
         },
@@ -152,15 +152,8 @@ export default {
         async sendToBackend() {
             try {
                 this.loading = true;
-                await axios.post('/api/pallets/' + this.palletId + '/products', this.products.map(x => {
-                    if (x.id == null) {
-                        return { name: x.name, quantity: x.quantity };
-                    }
-                    else {
-                        return { id: x.id, quantity: x.quantity };
-                    }
-                }
-                ));
+                const dupa = this.products.map(x => x.id === null ? { name: x.name, quantity: x.quantity } : { id: x.id, quantity: x.quantity });
+                await axios.post('/api/pallets/' + this.palletId + '/products', dupa);
             }
             catch (err) {
                 if (err.response.status == 409) {
